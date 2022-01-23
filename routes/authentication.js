@@ -2,16 +2,8 @@ import express from "express";
 import bcrypt from 'bcrypt';
 import UserModel from "../models/UserModel.js";
 
-import { auth } from "../middleware/auth.js";
-
 
 const router = express.Router()
-
-
-router.get('/', auth, (req, res) => {
-  res.render('home', { layout: 'layouts/main-layout' });
-})
-
 
 router.delete('/logout', (req, res)=>{
   // delete req.session
@@ -39,7 +31,8 @@ router.post('/login', async (req, res) => {
   }
 
   req.session.auth = true;
-  res.redirect('/');
+  req.session.email = user.email
+  res.redirect('/dashboard');
 
 
 
@@ -67,12 +60,13 @@ router.post('/register', async (req, res) => {
   await user.save()
 
   req.session.auth = true;
+  req.session.email = user.email
 
-  res.redirect('/')
+  res.redirect('/dashboard')
 
 })
 
-router.get('/auth', (req, res) => {
+router.get('/', (req, res) => {
   res.render('auth', { layout: 'layouts/login-regis-loyout', pesan: req.flash('pesan') })
 })
 

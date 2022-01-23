@@ -5,7 +5,7 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form method="post" action="login">
+                <form method="post" action="/auth/login">
                     <h1>Form Masuk</h1>
                     <% if (pesan.length > 0) { %>
                         <div class="alert alert-danger" role="alert">
@@ -45,7 +45,7 @@
 
         <div id="register" class="animate form registration_form">
             <section class="login_content">
-                <form method="post" action="/register">
+                <form method="post" action="/auth/register">
                     <h1>Buat Akun Baru</h1>
                     <% if (pesan.length > 0) { %>
                         <div class="alert alert-danger" role="alert">

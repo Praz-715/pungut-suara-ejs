@@ -1,13 +1,18 @@
 import express from "express";
-import router from "./routes/index.js";
 import expressLayouts from 'express-ejs-layouts';
 import methodOverride from "method-override";
 import session from "express-session";
 import flash from 'connect-flash';
 import cookieParser from "cookie-parser";
 import ConnectMongoDBSession from "connect-mongodb-session";
-import { database } from "./config/Database.js";
 import path from "path";
+
+import { database } from "./config/Database.js";
+import dashboard from "./routes/dashboard.js";
+import authentication from "./routes/authentication.js";
+import home from "./routes/home.js";
+
+import {auth} from "./middleware/auth.js"
 
 
 
@@ -43,7 +48,9 @@ app.use(methodOverride('_method'));
 // Connect Database
 database()
 
-app.use(router)
+app.use('/dashboard', auth ,dashboard)
+app.use('/auth',authentication)
+app.use('/', home)
 
 
 app.listen(port, () => {
