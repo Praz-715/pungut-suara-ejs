@@ -6,7 +6,7 @@ import flash from 'connect-flash';
 import cookieParser from "cookie-parser";
 import ConnectMongoDBSession from "connect-mongodb-session";
 import path from "path";
-import cors from "cors"
+// import cors from "cors"
 
 import { database } from "./config/Database.js";
 import dashboard from "./routes/dashboard.js";
@@ -26,7 +26,7 @@ const store = new MongoDBSession({
   collection: 'mySession'
 })
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+// app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.json())
 
 // SetUp EJS
