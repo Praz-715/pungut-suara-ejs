@@ -6,6 +6,7 @@ import flash from 'connect-flash';
 import cookieParser from "cookie-parser";
 import ConnectMongoDBSession from "connect-mongodb-session";
 import path from "path";
+import cors from "cors"
 
 import { database } from "./config/Database.js";
 import dashboard from "./routes/dashboard.js";
@@ -24,6 +25,9 @@ const store = new MongoDBSession({
   uri: 'mongodb://teguh:ganteng@cluster0-shard-00-00.r0ah9.mongodb.net:27017,cluster0-shard-00-01.r0ah9.mongodb.net:27017,cluster0-shard-00-02.r0ah9.mongodb.net:27017/pungutSuara?ssl=true&replicaSet=atlas-58d3uw-shard-0&authSource=admin&retryWrites=true&w=majority',
   collection: 'mySession'
 })
+
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+app.use(express.json())
 
 // SetUp EJS
 app.set('view engine', 'ejs');

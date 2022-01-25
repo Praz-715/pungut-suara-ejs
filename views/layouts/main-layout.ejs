@@ -30,6 +30,7 @@
     <link href="/public/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="/public/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <link href="/public/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    
 
     <!-- Custom Theme Style -->
     <link href="/public/build/css/custom.min.css" rel="stylesheet">
@@ -192,11 +193,11 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="<%= user.foto %> " alt=""><%= user.nama %> 
+                                    <img src="<%= user.foto %>" alt=""><%= user.nama %> 
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;"> Profile</a></li>
+                                    <li><a href="/dashboard/profile"> Profile</a></li>
                                     <li>
                                         <a href="javascript:;">
                                             <span class="badge bg-red pull-right">50%</span>
