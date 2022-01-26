@@ -18,30 +18,29 @@
                 </div>
                 <div class="x_content">
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form id="demo-form2" action="/dashboard/tambah-pemilihan" method="post" class="form-horizontal form-label-left">
 
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Pemilihan<span class="required">*</span>
-                </label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Pemilihan <span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" placeholder="Contoh: Pemilihan Kutua Kelas">
+                                <input type="text" id="first-name" name="namaPemilihan" required="required" class="form-control col-md-7 col-xs-12" placeholder="Contoh: Pemilihan Kutua Kelas">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sifat Pemilihan</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sifat Pemilihan <span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div id="gender" class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                  <input type="radio" name="gender" value="male"> &nbsp; Rahasia &nbsp;
+                                <div id="sifatPemilihan" class="btn-group" data-toggle="buttons">
+                                    <label for="tertutup" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                  <input id="tertutup" type="radio" name="sifatPemilihan" value="tertutup"> &nbsp; Tertutup &nbsp;
                                 </label>
-                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                  <input type="radio" name="gender" value="female"> Umum
+                                    <label for="terbuka" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                  <input id="terbuka" type="radio" name="sifatPemilihan" value="terbuka"> Terbuka
                                 </label>
 
                                 </div>
                                 <button type="button" class="btn btn-default ml-5" style="border: none;" onclick="new PNotify({
                                   title: 'Sifat Pemilihan',
-                                  text: 'Rahasia berarti anda sebagai admin akan mementukan siapa saja orang yang dapat memlilih\nUmum berarti siapa saja bisa berpartisipasi dalam pemilihan yang anda buat',
+                                  text: 'Tertutup berarti anda sebagai admin akan mementukan siapa saja orang yang dapat memlilih\nTerbuka berarti siapa saja bisa berpartisipasi dalam pemilihan yang anda buat',
                                   type: 'info',
                                   styling: 'bootstrap3'
                               });"><i class="fa fa-exclamation-circle"></i></span></button><span>
@@ -56,7 +55,7 @@
                                             <div class="controls">
                                                 <div class="input-prepend input-group">
                                                     <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                    <input type="text" name="reservation-time" id="reservation-time" class="form-control" value="" />
+                                                    <input type="text" name="waktuBerlangsung" id="reservation-time" class="form-control" value="" />
                                                 </div>
                                             </div>
                                         </div>

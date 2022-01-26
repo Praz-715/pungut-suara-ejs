@@ -3,18 +3,9 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>User Profile</h3>
-            </div>
-
-            <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Go!</button>
-              </span>
-                    </div>
-                </div>
+                <a href="/dashboard">
+                    <h3>Dashboard</h3>
+                </a>
             </div>
         </div>
 
@@ -24,7 +15,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>User Report <small>Activity report</small></h2>
+                        <h2>Profil<small></small></h2>
 
                         <div class="clearfix"></div>
                     </div>
@@ -58,8 +49,7 @@
                                     </li>
                                     <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Ganti Kata Sandi</a>
                                     </li>
-                                    <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Hapus Akun</a>
-                                    </li>
+
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
                                     <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
@@ -79,22 +69,21 @@
                                                 <input type="text" name="nohp" id="nohp" class="form-control" data-inputmask="'mask' : '9999-9999-9999'" value="<%= user.nohp %>">
                                             </div>
                                             <div class="col-md-12 col-xs-12" style="margin: 10px 0px 10px 0px;">
-                                                <button class="btn btn-success" name="simpan" type="submit"> Simpan</button>
-
+                                                <button class="btn btn-success" name="simpan" type="submit" style="display: inline;"> Simpan</button>
                                             </div>
                                         </form>
                                         <!-- end recent activity -->
 
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                                        <div class="col-md-10 center-margin">
+                                        <div class="col-md-10 center-margin" style="margin-top: 30px;">
                                             <form id="gantiSandi" action="javascript: gantiSandi()" class="form-horizontal form-label-left">
-                                                <div class="form-group">
+                                                <div class="form-group" style="margin: 20px 0px 20px 0px;">
                                                     <label for="sandiBaru">Kata Sandi Baru</label>
                                                     <input type="password" class="form-control" name="sandiBaru" id="sandiBaru" placeholder="Sandi Baru">
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="margin: 10px 0px 10px 0px;">
                                                     <label for="sandiLama">Kata Sandi Lama</label>
                                                     <input type="password" class="form-control" name="sandiLama" id="sandiLama" placeholder="Sandi Lama">
                                                 </div>
@@ -102,49 +91,6 @@
                                                 <h3 id="errorSandi" class="text-danger" style="display: inline;"></h3>
                                             </form>
                                         </div>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                                        <form action="/dashboard/hapusakun" method="post">
-                                            <!-- Small modal -->
-                                            <div class="text-center">
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm">
-                                                  <div class="text-center">
-                                                    <span class="glyphicon glyphicon-remove text-info" style="font-size: 80px;" aria-hidden="true"></span>
-
-                                                  </div>
-                                                  Hapus akun secara permanen</button>
-                                            </div>
-
-                                            <div class="modal fade bs-example-modal-sm " tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-sm">
-                                                    <div class="modal-content bg-danger">
-
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                          </button>
-                                                            <h4 class="modal-title" id="myModalLabel2">Peringatan</h4>
-                                                        </div>
-                                                        <div class="modal-body ">
-                                                            <div class="text-center">
-                                                                <span class="glyphicon glyphicon-remove text-danger" style="font-size: 80px;" aria-hidden="true"></span>
-                                                            </div>
-                                                            <h4>Menghapus akun secara permanen</h4>
-                                                            <p>Berarti menghapus seluruh pemilihan yang anda buat</p>
-                                                            <p>Setelah email akun anda dihapus, anda bisa mendaftarkan email untuk bisa digunakan kembali</p>
-                                                            <!-- <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p> -->
-                                                        </div>
-                                                        <div class="modal-footer align-center">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                                                            <button class="btn btn-danger" name="hapusakun" type="submit">Hapus</button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /modals -->
-                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -156,102 +102,3 @@
     </div>
 </div>
 <!-- /page content -->
-
-
-<script>
-    function gantiSandi() {
-        const form = document.getElementById('gantiSandi');
-        const sandiBaru = form.elements['sandiBaru'];
-        const sandiLama = form.elements['sandiLama'];
-        const btnUbahSandi = form.elements['btnUbahSandi'];
-
-        sandiBaru.disabled = true
-        sandiLama.disabled = true
-
-        const data = {
-            sandiBaru: sandiBaru.value,
-            sandiLama: sandiLama.value
-        }
-        btnUbahSandi.innerHTML = "<i class='fa fa-spin fa-spinner'></i> Tunggu"
-
-        fetch('/dashboard/ganti-sandi', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                credentials: 'include',
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                // console.log('Success:', data.);
-                btnUbahSandi.innerHTML = "Ubah"
-                const ituerror = document.getElementById('errorSandi')
-                const pesan = data.msg
-                if (pesan === 'Sandi tidak berbeda') {
-                    sandiBaru.value = ''
-                    sandiLama.value = ''
-                } else if (pesan === 'Sandi lama salah') {
-                    sandiLama.value = ''
-                } else if (pesan === 'ok') {
-                    sandiBaru.value = ''
-                    sandiLama.value = ''
-                }
-                ituerror.innerHTML = pesan
-                sandiBaru.disabled = false
-                sandiLama.disabled = false
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-    }
-
-    function updateProfile() {
-        const form = document.getElementById('updateProfile');
-        const nama = form.elements['nama']
-        const nohp = form.elements['nohp']
-        const simpan = form.elements['simpan']
-
-        nama.disabled = true
-        nohp.disabled = true
-        simpan.disabled = true
-
-        const data = {
-            nama: nama.value,
-            nohp: nohp.value
-        }
-
-        simpan.innerHTML = "<i class='fa fa-spin fa-spinner'></i> Tunggu"
-
-        fetch('/dashboard/update-profile', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                credentials: 'include',
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                const semuaNama = document.querySelectorAll('#idnama');
-                semuaNama.forEach((nama) => {
-                    nama.innerHTML = data.nama
-                })
-                simpan.innerHTML = "Simpan"
-                nama.disabled = false
-                nohp.disabled = false
-                simpan.disabled = false
-                return alert('success!')
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-        // console.log(nama.toString())
-
-    }
-</script>

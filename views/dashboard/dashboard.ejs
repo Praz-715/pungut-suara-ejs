@@ -689,18 +689,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    if(!sessionStorage.getItem('notifAwal')){
-        function init_PNotify() {
-            "undefined" != typeof PNotify && (console.log("init_PNotify"), new PNotify({
-                title: "Pungut Suara",
-                type: "info",
-                text: "Selamat Datang di Pungut Suara, anda bisa membuat pemilihan dan memanajemenkan secara online",
-                addclass: "dark",
-                styling: "bootstrap3",
-            }))
-            sessionStorage.setItem('notifAwal', true)
-        }
-    }
-</script>
