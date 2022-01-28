@@ -57,6 +57,10 @@ app.use('/dashboard', auth ,dashboard)
 app.use('/auth',authentication)
 app.use('/', home)
 
+app.use('/', (req,res)=>{
+  res.render('404',{layout: 'layouts/buangan'})
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`);

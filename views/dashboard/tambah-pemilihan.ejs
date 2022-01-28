@@ -20,33 +20,31 @@
                     <br />
                     <form id="demo-form2" action="/dashboard/tambah-pemilihan" method="post" class="form-horizontal form-label-left">
 
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 20px;">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Pemilihan <span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" id="first-name" name="namaPemilihan" required="required" class="form-control col-md-7 col-xs-12" placeholder="Contoh: Pemilihan Kutua Kelas">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 20px;">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Sifat Pemilihan <span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div id="sifatPemilihan" class="btn-group" data-toggle="buttons">
-                                    <label for="tertutup" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                  <input id="tertutup" type="radio" name="sifatPemilihan" value="tertutup"> &nbsp; Tertutup &nbsp;
-                                </label>
-                                    <label for="terbuka" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                  <input id="terbuka" type="radio" name="sifatPemilihan" value="terbuka"> Terbuka
-                                </label>
 
-                                </div>
-                                <button type="button" class="btn btn-default ml-5" style="border: none;" onclick="new PNotify({
-                                  title: 'Sifat Pemilihan',
-                                  text: 'Tertutup berarti anda sebagai admin akan mementukan siapa saja orang yang dapat memlilih\nTerbuka berarti siapa saja bisa berpartisipasi dalam pemilihan yang anda buat',
-                                  type: 'info',
-                                  styling: 'bootstrap3'
-                              });"><i class="fa fa-exclamation-circle"></i></span></button><span>
+                                    <label for="sifatTerbuka" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
+                                        <input type="radio" name="sifat" id="sifatTerbuka">
+                                        Terbuka</label>
+                                    <label for="sifatTertutup" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
+                                        <input type="radio" name="sifat" id="sifatTertutup">
+                                        Tertutup</label>
+                                        <button type="button" class="btn btn-default ml-5" style="border: none;" onclick="new PNotify({
+                                            title: 'Sifat Pemilihan',
+                                            text: 'Tertutup berarti anda sebagai admin akan mementukan siapa saja orang yang dapat memlilih\nTerbuka berarti siapa saja bisa berpartisipasi dalam pemilihan yang anda buat',
+                                            type: 'info',
+                                            styling: 'bootstrap3'
+                                        });"><i class="fa fa-exclamation-circle"></i></button>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 20px;">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Waktu berlangsung <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">

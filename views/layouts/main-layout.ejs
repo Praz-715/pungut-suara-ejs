@@ -35,8 +35,7 @@
     <!-- Custom Theme Style -->
     <link href="/public/build/css/custom.min.css" rel="stylesheet">
 </head>
-
-<body class="nav-md">
+<body class="<%= user.sidebar %> ">
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col">
@@ -113,11 +112,16 @@
                                         </a>
                                     </li>
                                     <li><a href="javascript:;">Help</a></li>
+                                    <form action="/auth/logout?_method=DELETE" method="post">
                                     <li>
-                                        <form action="/auth/logout?_method=DELETE" method="post">
-                                            <button><i class="fa fa-sign-out pull-right"></i> Log Out</button>
-                                        </form>
-                                    </li>
+                                           <a>
+                                                <button type="submit" class="btn" style="padding: 0 0 0 0; border: none; background-color: white;">
+                                                  Log Out
+                                            </button>
+                                            <i class="fa fa-sign-out pull-right"></i>
+                                            </a> 
+                                        </li>
+                                    </form>
                                     <!-- <li><a href="/logout?_method=DELETE"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li> -->
                                 </ul>
                             </li>
