@@ -38,10 +38,12 @@ app.use('/favicon.ico', express.static('images/favicon.ico'));
 // SetUp Flash
 app.use(cookieParser('secret'));
 app.use(session({
-  // cookie: { maxAge: 6000 },
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+  },
   secret: 'secret',
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   store: store
 }));
 app.use(flash());

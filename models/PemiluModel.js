@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-import URLSlug from 'mongoose-slug-generator'
+import URLslug from 'mongoose-slug-generator'
 
-mongoose.plugin(URLSlug);
+mongoose.plugin(URLslug);
 
 const calonDipilih = new mongoose.Schema({
     nama: { type: String },
@@ -10,21 +10,41 @@ const calonDipilih = new mongoose.Schema({
     jumlahSuara: { type: Number, default: 0 }
 })
 
-const pelaksanaan = new mongoose.Schema({
+const waktuPelaksanaan = new mongoose.Schema({
     awal: { type: Date },
     akhir: { type: Date },
 });
 
 const pemiluSchema = new mongoose.Schema({
+    //id pemilik
     pemilik: mongoose.Schema.Types.ObjectId,
-    namaPemilu: { type: String, required: true },
-    slug: { type: String, unique: true, slug: 'namaPemilu' },
-    sifatPublic: { type: Boolean, default: true },
-    waktuPelaksanaan: pelaksanaan,
+    //slug
+    
+    namaPemilihan: { type: String, required: true },
+
+    slug: { type: String, slug: 'namaPemilihan', unique: true },
+
+
+    // apakah pemilu terbuka atau tertutup
+    pemilihanTerbuka: { type: Boolean, required: true, default: true },
+
+    waktuPelaksanaan: waktuPelaksanaan,
+    
+    // status pemilu
+    statusPemilihan: { type: String, required: false, default: 'akan berlangsung' },
+
+
+    // optional
     deskripsi: { type: String, required: false },
     fotoKampanye: { type: String, required: false },
     videoKampanye: { type: String, required: false },
-    statusPemilu: { type: String, required: true, default: 'WILL' },
+
+
+    // Mode Group
+    modeGroup : {type: Boolean, default: false},
+    fieldGroup: [String],
+
+
     calonDipilih: [calonDipilih],
     fieldPemilih: [String],
     pemilih: [mongoose.Schema.Types.Mixed]

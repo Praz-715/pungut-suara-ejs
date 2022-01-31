@@ -145,19 +145,19 @@ function init_sidebar() {
     .parent("li")
     .addClass("current-page");
 
-  $SIDEBAR_MENU
-    .find("a")
-    .filter(function () {
-      return this.href == CURRENT_URL;
-    })
-    .parent("li")
-    .addClass("current-page")
-    .parents("ul")
-    .slideDown(function () {
-      setContentHeight();
-    })
-    .parent()
-    .addClass("active");
+  // $SIDEBAR_MENU
+  //   .find("a")
+  //   .filter(function () {
+  //     return this.href == CURRENT_URL;
+  //   })
+  //   .parent("li")
+  //   .addClass("current-page")
+  //   .parents("ul")
+  //   .slideDown(function () {
+  //     setContentHeight();
+  //   })
+  //   .parent()
+  //   .addClass("active");
 
   // recompute content when resizing
   $(window).smartresize(function () {
