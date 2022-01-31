@@ -18,16 +18,17 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   const user = await UserModel.findOne({ email })
-
+  console.log('apakah tidak user',!user)
   if (!user) {
+    console.log('didalem user')
     req.flash('pesan', 'Email tidak ditemukan');
-    res.redirect("/auth#signin")
+    return res.redirect("/auth")
   }
 
   const cekPassword = await bcrypt.compare(password, user.password)
   if (!cekPassword) {
     req.flash('pesan', 'Password anda salah');
-    res.render('auth', { layout: 'layouts/login-regis-loyout', pesan: req.flash('pesan'), isiForm: req.body })
+    return res.render('auth', { layout: 'layouts/login-regis-loyout', pesan: req.flash('pesan'), isiForm: req.body })
   }
 
   req.session.auth = true;
@@ -48,7 +49,7 @@ router.post('/register', async (req, res) => {
 
   if (user) {
     req.flash('pesan', 'Email sudah terdaftar, silahkan login');
-    res.render('auth', { layout: 'layouts/login-regis-loyout', pesan: req.flash('pesan'), isiForm: req.body })
+    return res.render('auth', { layout: 'layouts/login-regis-loyout', pesan: req.flash('pesan'), isiForm: req.body })
   }
   const salt = await bcrypt.genSalt();
   const passwordHash = await bcrypt.hash(password, salt)

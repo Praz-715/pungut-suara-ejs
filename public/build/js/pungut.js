@@ -1,5 +1,122 @@
 
-
+ 
+  const dataJson = [
+    {
+      "Name": "Tiger Nixon",
+      "Position": "System Architect",
+      "Office": "Edinburgh",
+      "Age": 61,
+      "Start date": "2011/04/25",
+      "Salary": "$320,800"
+    },
+    {
+      "Name": "Garrett Winters",
+      "Position": "Accountant",
+      "Office": "Tokyo",
+      "Age": 63,
+      "Start date": "2011/07/25",
+      "Salary": "$170,750"
+    },
+    {
+      "Name": "Ashton Cox",
+      "Position": "Junior Technical Author",
+      "Office": "San Francisco",
+      "Age": 66,
+      "Start date": "2009/01/12",
+      "Salary": "$86,000"
+    },
+    {
+      "Name": "Cedric Kelly",
+      "Position": "Senior Javascript Developer",
+      "Office": "Edinburgh",
+      "Age": 22,
+      "Start date": "2012/03/29",
+      "Salary": "$433,060"
+    },
+    {
+      "Name": "Airi Satou",
+      "Position": "Accountant",
+      "Office": "Tokyo",
+      "Age": 33,
+      "Start date": "2008/11/28",
+      "Salary": "$162,700"
+    },
+    {
+      "Name": "Brielle Williamson",
+      "Position": "Integration Specialist",
+      "Office": "New York",
+      "Age": 61,
+      "Start date": "2012/12/02",
+      "Salary": "$372,000"
+    },
+    {
+      "Name": "Herrod Chandler",
+      "Position": "Sales Assistant",
+      "Office": "San Francisco",
+      "Age": 59,
+      "Start date": "2012/08/06",
+      "Salary": "$137,500"
+    },
+    {
+      "Name": "Rhona Davidson",
+      "Position": "Integration Specialist",
+      "Office": "Tokyo",
+      "Age": 55,
+      "Start date": "2010/10/14",
+      "Salary": "$327,900"
+    },
+    {
+      "Name": "Colleen Hurst",
+      "Position": "Javascript Developer",
+      "Office": "San Francisco",
+      "Age": 39,
+      "Start date": "2009/09/15",
+      "Salary": "$205,500"
+    },
+    {
+      "Name": "Sonya Frost",
+      "Position": "Software Engineer",
+      "Office": "Edinburgh",
+      "Age": 23,
+      "Start date": "2008/12/13",
+      "Salary": "$103,600"
+    },
+    {
+      "Name": "Jena Gaines",
+      "Position": "Office Manager",
+      "Office": "London",
+      "Age": 30,
+      "Start date": "2008/12/19",
+      "Salary": "$90,560"
+    },
+    {
+      "Name": "Quinn Flynn",
+      "Position": "Support Lead",
+      "Office": "Edinburgh",
+      "Age": 22,
+      "Start date": "2013/03/03",
+      "Salary": "$342,000"
+    },
+    {
+      "Name": "Charde Marshall",
+      "Position": "Regional Director",
+      "Office": "San Francisco",
+      "Age": 36,
+      "Start date": "2008/10/16",
+      "Salary": "$470,600"
+    },
+    
+   ]
+   const columnData = [
+    
+      {data: "Name",},
+      {data: "Position",},
+      {data: "Office",},
+      {data: "Age",},
+      {data: "Start date",},
+      {data: "Salary",}
+    
+  ]
 
 
 

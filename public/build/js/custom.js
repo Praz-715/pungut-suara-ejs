@@ -3009,6 +3009,8 @@ function init_DataTables() {
   var handleDataTableButtons = function () {
     if ($("#datatable-buttons").length) {
       $("#datatable-buttons").DataTable({
+        data:dataJson,
+        columns: columnData,
         dom: "Bfrtip",
         buttons: [
           {
