@@ -182,7 +182,8 @@ var randNum = function () {
 };
 
 // Panel toolbox
-$(document).ready(function () {
+
+
   $(".collapse-link").on("click", function () {
     var $BOX_PANEL = $(this).closest(".x_panel"),
       $ICON = $(this).find("i"),
@@ -206,7 +207,7 @@ $(document).ready(function () {
 
     $BOX_PANEL.remove();
   });
-});
+
 // /Panel toolbox
 
 // Tooltip
@@ -3011,8 +3012,13 @@ function init_DataTables() {
       $("#datatable-buttons").DataTable({
         data:dataJson,
         columns: columnData,
-        dom: "Bfrtip",
+        dom: "Blfrtip",
         buttons: [
+          {
+            extend: 'pdfHtml5',
+            download: 'open',
+            className: "btn-sm"
+        },
           {
             extend: "copy",
             className: "btn-sm",
@@ -3024,17 +3030,19 @@ function init_DataTables() {
           {
             extend: "excel",
             className: "btn-sm",
+            filename: "Pemilih"
           },
-          {
-            extend: "pdfHtml5",
-            className: "btn-sm",
-          },
+          // {
+          //   extend: "pdfHtml5",
+          //   className: "btn-sm",
+          // },
           {
             extend: "print",
             className: "btn-sm",
           },
         ],
         responsive: true,
+        keys: true,
       });
     }
   };

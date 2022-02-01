@@ -115,22 +115,40 @@ router.get('/pemilihan/:slug', async(req,res)=>{
 
   // console.log(req.params.slug)
 
-  const pemilihan = await PemiluModel.findOne({slug})
+  let pemilihan = await PemiluModel.findOne({slug})
 
   if(!pemilihan) res.redirect('/404')
 
-  const waktuAwal = moment(pemilihan.waktuPelaksanaan.awal).format('D MMMM YYYY [pukul] HH.mm').toString()
-  const waktuAkhir = moment(pemilihan.waktuPelaksanaan.akhir).format('D MMMM YYYY [pukul] HH.mm').toString()
+  const waktuAwal = moment(pemilihan.waktuPelaksanaan.awal)
+  const waktuAkhir = moment(pemilihan.waktuPelaksanaan.akhir)
+  const waktuSekarang = moment()
 
 
-  pemilihan.waktuAwal = waktuAwal
-  pemilihan.waktuAkhir = waktuAkhir
+
 
   console.log('awal',  pemilihan.waktuPelaksanaan.awal)
   console.log('akhir', waktuAkhir)
+
+  console.log('host', req.get('host'))
+
+  if(waktuAwal.diff(waktuSekarang) <= 0){
+    if(waktuAkhir.diff(waktuSekarang) <= 0){
+      console.log('waktu akhir beda dari sekarang', waktuAkhir.diff(waktuSekarang))
+      await PemiluModel.findOneAndUpdate({slug},{statusPemilihan:'telah berakhir'})
+    }else{
+      console.log('waktu akhir beda dari esle', waktuAkhir.diff(waktuSekarang))
+      await PemiluModel.findOneAndUpdate({slug},{statusPemilihan:'sedang berlangsung'})
+    }
+  }else{
+    await PemiluModel.findOneAndUpdate({slug},{statusPemilihan:'akan berlangsung'})
+    
+  }
+  pemilihan = await PemiluModel.findOne({slug})
   // console.log(waktuAwal.format('D MMMM YYYY [pukul] HH.mm'))
   
-
+  pemilihan.waktuAwal = waktuAwal.format('D MMMM YYYY [pukul] HH.mm').toString()
+  pemilihan.waktuAkhir = waktuAkhir.format('D MMMM YYYY [pukul] HH.mm').toString()
+  pemilihan.host = req.get('host')
 
   res.render("dashboard/pemilihan", {
     layout: "layouts/main-layout",
