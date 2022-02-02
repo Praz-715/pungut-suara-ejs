@@ -27,6 +27,7 @@ const pemiluSchema = new mongoose.Schema({
 
     // apakah pemilu terbuka atau tertutup
     pemilihanTerbuka: { type: Boolean, required: true, default: true },
+    perhitunganLive: { type: Boolean, required: false, default: false },
 
     waktuPelaksanaan: waktuPelaksanaan,
     

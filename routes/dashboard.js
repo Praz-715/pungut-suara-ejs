@@ -104,9 +104,40 @@ router.post("/sidebar", async (req, res) => {
 
 // PUT
 
-router.put('/edit-pemilihan', async(req,res)=>{
+router.put('/edit-pemilihan',(req,res)=>{
+  let {id,namaPemilihan, sifatPemilihan, waktuBerlangsung, modeGrup, perhitunganLive, deskripsi} = req.body
 
-  res.json({ok:req.body})
+  
+  const waktunya = waktuBerlangsung.split(' - ');
+  console.log(waktunya)
+  const waktuAwal = new Date(waktunya[0])
+  const waktuAkhir = new Date(waktunya[1])
+
+
+  PemiluModel.findById(id,(err,data)=>{
+    if(err)throw err
+    data.namaPemilihan = namaPemilihan;
+    data.pemilihanTerbuka = (sifatPemilihan === 'terbuka') ? true : false;
+    data.modeGroup = (modeGrup === 'ya') ? true : false;
+    data.perhitunganLive = (perhitunganLive === 'ya') ? true : false;
+    data.waktuPelaksanaan = {awal: waktuAwal, akhir: waktuAkhir}
+    // pemilihan.waktuPelaksanaan.akhir = waktuAkhir
+    data.deskripsi = deskripsi
+    data.save()
+
+  })
+
+  setTimeout(()=>{
+    PemiluModel.findById(id,(err,data)=>{
+      if(err)throw err
+      res.redirect(`/dashboard/pemilihan/${data.slug}`)
+    })
+  },300)
+
+
+  // res.json(await PemiluModel.findById(id))
+  // console.log(`/dashboard/pemilihan/${pemilihan._id}`)
+  // res.redirect(`/dashboard/pemilihan/${pemilihan._id}`)
 })
 
 // DELETE
@@ -118,8 +149,6 @@ router.get('/pemilihan/:slug/pengaturan', async(req,res)=>{
   const {slug} = req.params;
   const pemilihan = await PemiluModel.findOne({slug});
 
-  const waktuAwal = moment(pemilihan.waktuPelaksanaan.awal)
-  const waktuAkhir = moment(pemilihan.waktuPelaksanaan.akhir)
 
   res.render("dashboard/pemilihan-edit", {
     layout: "layouts/main-layout",
@@ -131,12 +160,8 @@ router.get('/pemilihan/:slug/pengaturan', async(req,res)=>{
 
 router.get('/pemilihan/:slug', async(req,res)=>{
   const {slug} = req.params;
-
-  // console.log(req.params.slug)
-
   let pemilihan = await PemiluModel.findOne({slug})
-
-  if(!pemilihan) res.redirect('/404')
+  if(!pemilihan)  return res.redirect('/404')
 
   const waktuAwal = moment(pemilihan.waktuPelaksanaan.awal)
   const waktuAkhir = moment(pemilihan.waktuPelaksanaan.akhir)

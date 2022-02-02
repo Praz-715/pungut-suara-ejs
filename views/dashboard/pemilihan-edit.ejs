@@ -11,20 +11,21 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel" style="border: none;padding: 0px 0px 0px 0px;">
+            <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        <%= pemilihanDisini.namaPemilihan %> <small><%= pemilihanDisini.statusPemilihan %> </small></h2>
+                        <%= pemilihanDisini.namaPemilihan %> <small><%= pemilihanDisini.statusPemilihan %> 
+                        </small></h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
                     <form id="demo-form2" action="/dashboard/edit-pemilihan?_method=PUT" method="post" class="form-horizontal form-label-left">
-
+                        <input type="hidden" name="id" value="<%= pemilihanDisini._id %>">
                         <div class="form-group" style="margin-bottom: 20px;">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Pemilihan <span class="required">*</span></label>
                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                <input type="text" id="first-name" name="namaPemilihan" required="required" class="form-control col-md-7 col-xs-12" placeholder="Contoh: Pemilihan Kutua Kelas" value="<%= pemilihanDisini.namaPemilihan %> ">
+                                <input type="text" id="first-name" name="namaPemilihan" required="required" class="form-control col-md-7 col-xs-12" placeholder="Contoh: Pemilihan Kutua Kelas" value="<%= pemilihanDisini.namaPemilihan %>">
                             </div>
                         </div>
                         <div class="form-group" style="margin-bottom: 20px;">
@@ -32,10 +33,10 @@
                             <div class="col-md-8 col-sm-8 col-xs-12">
 
                                 <label for="sifatTerbuka" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
-                                <input type="radio" name="sifatPemilihan" value="terbuka" id="sifatTerbuka" checked="<%= (pemilihanDisini.pemilihanTerbuka) ? true : false %>">
+                                <input type="radio" name="sifatPemilihan" value="terbuka" id="sifatTerbuka" <%= (pemilihanDisini.pemilihanTerbuka) ? 'checked' : null %>>
                                 Terbuka</label>
                                 <label for="sifatTertutup" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
-                                <input type="radio" name="sifatPemilihan" value="tertutup" id="sifatTertutup" checked="<%= (pemilihanDisini.pemilihanTerbuka) ? true : false %>">
+                                <input type="radio" name="sifatPemilihan" value="tertutup" id="sifatTertutup" <%= (!pemilihanDisini.pemilihanTerbuka) ? 'checked' : null %>>
                                 Tertutup</label>
                                 <button type="button" class="btn btn-default ml-5" style="border: none;" onclick="new PNotify({
                                     title: 'Sifat Pemilihan',
@@ -66,10 +67,28 @@
                             <div class="col-md-8 col-sm-8 col-xs-12">
 
                                 <label for="grupYa" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
-                              <input type="radio" name="modeGrup" value="ya" id="grupYa" checked="<%= (pemilihanDisini.modeGroup) ? true : false %>">
+                              <input type="radio" name="modeGrup" value="ya" id="grupYa" <%= (pemilihanDisini.modeGroup) ? 'checked' : null %>>
                               Grup</label>
                                 <label for="grupTidak" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
-                              <input type="radio" name="modeGrup" value="tidak" id="grupTidak" checked="<%= (pemilihanDisini.modeGroup) ? true : false %>">
+                              <input type="radio" name="modeGrup" value="tidak" id="grupTidak" <%= (!pemilihanDisini.modeGroup) ? 'checked' : null %>>
+                              Tidak</label>
+                                <button type="button" class="btn btn-default ml-5" style="border: none;" onclick="new PNotify({
+                                  title: 'Sifat Pemilihan',
+                                  text: 'Tertutup berarti anda sebagai admin akan mementukan siapa saja orang yang dapat memlilih\nTerbuka berarti siapa saja bisa berpartisipasi dalam pemilihan yang anda buat',
+                                  type: 'info',
+                                  styling: 'bootstrap3'
+                              });"><i class="fa fa-exclamation-circle"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Perhitungan Suara Live <span class="required">*</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+
+                                <label for="perhitunganYa" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
+                              <input type="radio" name="perhitunganLive" value="ya" id="perhitunganYa" <%= (pemilihanDisini.perhitunganLive) ? 'checked' : null %>>
+                              Ya</label>
+                                <label for="perhitunganTidak" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
+                              <input type="radio" name="perhitunganLive" value="tidak" id="perhitunganTidak" <%= (!pemilihanDisini.perhitunganLive) ? 'checked' : null %>>
                               Tidak</label>
                                 <button type="button" class="btn btn-default ml-5" style="border: none;" onclick="new PNotify({
                                   title: 'Sifat Pemilihan',
@@ -81,8 +100,10 @@
                         </div>
                         <div class="form-group" style="margin-bottom: 20px;">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Deskripsi</label>
-                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                <textarea id="deskripsi" name="deskripsi"></textarea>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <textarea id="deskripsi" name="deskripsi"><%= pemilihanDisini.deskripsi %> </textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="ln_solid"></div>
