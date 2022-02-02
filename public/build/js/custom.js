@@ -201,6 +201,23 @@ var randNum = function () {
 
     $ICON.toggleClass("fa-chevron-up fa-chevron-down");
   });
+  $(".collapse-link-hilih").on("click", function () {
+    var $BOX_PANEL = $(this).closest(".x_panel_hilih"),
+      $ICON = $(this).find("i"),
+      $BOX_CONTENT = $BOX_PANEL.find(".x_content");
+
+    // fix for some div with hardcoded fix class
+    if ($BOX_PANEL.attr("style")) {
+      $BOX_CONTENT.slideToggle(200, function () {
+        $BOX_PANEL.removeAttr("style");
+      });
+    } else {
+      $BOX_CONTENT.slideToggle(200);
+      $BOX_PANEL.css("height", "auto");
+    }
+
+    $ICON.toggleClass("fa-chevron-up fa-chevron-down");
+  });
 
   $(".close-link").click(function () {
     var $BOX_PANEL = $(this).closest(".x_panel");
@@ -1447,7 +1464,6 @@ function init_wysiwyg() {
 
   $(".editor-wrapper").each(function () {
     var id = $(this).attr("id"); //editor-one
-
     $(this).wysiwyg({
       toolbarSelector: '[data-target="#' + id + '"]',
       fileUploadError: showErrorAlert,
@@ -2194,9 +2210,20 @@ function init_daterangepicker_reservation() {
     console.log(start.toISOString(), end.toISOString(), label);
   });
 
+  $("#berlangsung-time").daterangepicker(
+    {
+      timePicker: true,
+      startDate: (typeof waktuPelaksanaan !== 'undefined') ? moment(waktuPelaksanaan.awal) : moment(),
+      endDate: (typeof waktuPelaksanaan !== 'undefined') ? moment(waktuPelaksanaan.akhir) : moment(),
+      locale: {
+        format: "MM/DD/YYYY h:mm A",
+      }
+    }
+  )
+
   $("#reservation-time").daterangepicker({
     timePicker: true,
-    timePickerIncrement: 30,
+    // timePickerIncrement: 30,
     locale: {
       format: "MM/DD/YYYY h:mm A",
     },
@@ -3003,6 +3030,9 @@ function init_DataTables() {
   console.log("run_datatables");
 
   if (typeof $.fn.DataTable === "undefined") {
+    return;
+  }
+  if (typeof $("#datatable-buttons") === null) {
     return;
   }
   console.log("init_DataTables");

@@ -1,0 +1,114 @@
+<div class="right_col" role="main">
+    <div class="page-title">
+        <div class="title_left">
+            <a href="/dashboard">
+                <h3>Dashboard</h3>
+            </a>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel" style="border: none;padding: 0px 0px 0px 0px;">
+                <div class="x_title">
+                    <h2>
+                        <%= pemilihanDisini.namaPemilihan %> <small><%= pemilihanDisini.statusPemilihan %> </small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <form id="demo-form2" action="/dashboard/edit-pemilihan?_method=PUT" method="post" class="form-horizontal form-label-left">
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Pemilihan <span class="required">*</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <input type="text" id="first-name" name="namaPemilihan" required="required" class="form-control col-md-7 col-xs-12" placeholder="Contoh: Pemilihan Kutua Kelas" value="<%= pemilihanDisini.namaPemilihan %> ">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sifat Pemilihan <span class="required">*</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+
+                                <label for="sifatTerbuka" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
+                                <input type="radio" name="sifatPemilihan" value="terbuka" id="sifatTerbuka" checked="<%= (pemilihanDisini.pemilihanTerbuka) ? true : false %>">
+                                Terbuka</label>
+                                <label for="sifatTertutup" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
+                                <input type="radio" name="sifatPemilihan" value="tertutup" id="sifatTertutup" checked="<%= (pemilihanDisini.pemilihanTerbuka) ? true : false %>">
+                                Tertutup</label>
+                                <button type="button" class="btn btn-default ml-5" style="border: none;" onclick="new PNotify({
+                                    title: 'Sifat Pemilihan',
+                                    text: 'Tertutup berarti anda sebagai admin akan mementukan siapa saja orang yang dapat memlilih\nTerbuka berarti siapa saja bisa berpartisipasi dalam pemilihan yang anda buat',
+                                    type: 'info',
+                                    styling: 'bootstrap3'
+                                });"><i class="fa fa-exclamation-circle"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Waktu berlangsung <span class="required">*</span>
+                        </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <fieldset>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <div class="input-prepend input-group">
+                                                <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                                <input type="text" name="waktuBerlangsung" id="berlangsung-time" class="form-control" value="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mode Grup <span class="required">*</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+
+                                <label for="grupYa" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
+                              <input type="radio" name="modeGrup" value="ya" id="grupYa" checked="<%= (pemilihanDisini.modeGroup) ? true : false %>">
+                              Grup</label>
+                                <label for="grupTidak" class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-primary">
+                              <input type="radio" name="modeGrup" value="tidak" id="grupTidak" checked="<%= (pemilihanDisini.modeGroup) ? true : false %>">
+                              Tidak</label>
+                                <button type="button" class="btn btn-default ml-5" style="border: none;" onclick="new PNotify({
+                                  title: 'Sifat Pemilihan',
+                                  text: 'Tertutup berarti anda sebagai admin akan mementukan siapa saja orang yang dapat memlilih\nTerbuka berarti siapa saja bisa berpartisipasi dalam pemilihan yang anda buat',
+                                  type: 'info',
+                                  styling: 'bootstrap3'
+                              });"><i class="fa fa-exclamation-circle"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Deskripsi</label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <textarea id="deskripsi" name="deskripsi"></textarea>
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-sm-8 col-xs-12 col-md-offset-3">
+                                <button class="btn btn-primary" type="reset">Reset</button>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script>
+        var waktuPelaksanaan = <%- JSON.stringify({
+            awal: pemilihanDisini.waktuPelaksanaan.awal,
+            akhir: pemilihanDisini.waktuPelaksanaan.akhir,
+            slug:pemilihanDisini.slug
+          }) %>
+    </script>

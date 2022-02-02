@@ -1,10 +1,3 @@
-<!-- Datatables -->
-<link href="/public/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-<link href="/public/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-<link href="/public/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-<link href="/public/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-<link href="/public/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-
 <div class="right_col" role="main">
     <div class="page-title">
         <div class="title_left">
@@ -22,136 +15,107 @@
                 <div class="x_title">
                     <h2>
                         <%= pemilihanDisini.namaPemilihan %> <small><%= pemilihanDisini.statusPemilihan %> </small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a href="/dashboard/pemilihan/<%= pemilihanDisini.slug %>/pengaturan"><i class="fa fa-wrench"></i></a>
+                        </li>
+
+                    </ul>
                     <div class="clearfix"></div>
+
                 </div>
                 <div class="x_content">
-
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel_hilih">
                             <div class="x_title">
-                                <h2><i class="fa fa-thumb-tack"></i> Pemilihan <small>Float left</small></h2>
+                                <h2><i class="fa fa-edit"></i> Pemilihan</h2>
                                 <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li><a class="edit-link" style="color: green;"><i class="fa fa-edit"></i></a>
+                                    <li><a class="collapse-link-hilih "><i class="fa fa-chevron-up"></i></a>
                                     </li>
 
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>URL Pemilihan</th>
-                                            <th>
-                                                <a href="/pemilihan/<%= pemilihanDisini.slug %> ">https://<%= pemilihanDisini.host %>/<%= pemilihanDisini.slug %> </a>
-                                            </th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">Berlangsung</th>
-                                            <td>
-                                                <div id="berlangsung">
-                                                    <%= pemilihanDisini.waktuAwal %>
+                                <div class="row">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">URL Pemilihan</label>
+                                    <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                        <a href="/pemilihan/<%= pemilihanDisini.slug %> ">https://<%= pemilihanDisini.host %>/<%= pemilihanDisini.slug %> </a>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div class="row">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Berlangsung</label>
+                                    <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                        <%= pemilihanDisini.waktuAwal %>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sampai</label>
+                                    <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                        <%= pemilihanDisini.waktuAkhir %>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sifat Pemilihan</label>
+                                    <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                        <%= (pemilihanDisini.pemilihanTerbuka ? 'Terbuka' : 'Tertutup') %>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                          Mode Grup
+                          <button type="button" class="btn btn-default ml-5" style="border: none; padding: 0px 0px 0px 0px;" onclick="new PNotify({
+                            title: 'Mode Grup',
+                            text: 'Artinya membuat beberapa grup yang bisa dipilih oleh Pemilih dalam 1 saja pemilihan, contohnya group Pemilihan Presiden dan group Pemilihan DPR',
+                            type: 'info',
+                            styling: 'bootstrap3'
+                        });"><i class="fa fa-exclamation-circle"></i></button>
+                        </label>
+                                    <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                        <%= (pemilihanDisini.modeGroup ? 'Ya' : 'Tidak') %>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Status Pemilihan</label>
+                                    <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                        <%= pemilihanDisini.statusPemilihan %>
+                                            <div id="countdown"></div>
+                                    </div>
+                                </div>
+                                <% if (pemilihanDisini.deskripsi) { %>
+                                    <div class="row">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Deskripsi</label>
+                                        <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                            <%= pemilihanDisini.deskripsi %>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% if (pemilihanDisini.fotoKampanye) { %>
+                                            <div class="row">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Foto Lembaga</label>
+                                                <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                                    <%= pemilihanDisini.fotoKampanye %>
                                                 </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Berakhir</th>
-                                            <td>
-                                                <div id="berakhir">
-                                                    <%= pemilihanDisini.waktuAkhir %>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Sifat</th>
-                                            <td>
-                                                <%= (pemilihanDisini.pemilihanTerbuka ? 'Terbuka' : 'Tertutup') %>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <th scope="row">
-                                                Mode Grup
-                                                <button type="button" class="btn btn-default ml-5" style="border: none; padding: 0px 0px 0px 0px;" onclick="new PNotify({
-                                            title: 'Mode Grup',
-                                            text: 'Artinya membuat beberapa grup yang bisa dipilih oleh Pemilih dalam 1 saja pemilihan, contohnya group Pemilihan Presiden dan group Pemilihan DPR',
-                                            type: 'info',
-                                            styling: 'bootstrap3'
-                                        });"><i class="fa fa-exclamation-circle"></i></button>
-                                            </th>
-                                            <td>
-                                                <%= (pemilihanDisini.modeGroup ? 'Ya' : 'Tidak') %>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Status Pemilihan</th>
-                                            <td>
-                                                <div id="sifatPemilihan">
-                                                    <%= pemilihanDisini.statusPemilihan %>
-                                                </div>
-                                                <div id="countdown"></div>
-                                            </td>
-
-                                        </tr>
-                                        <% if (pemilihanDisini.deskripsi) { %>
-
-                                            <tr>
-                                                <th scope="row">Deskripsi</th>
-                                                <td>
-                                                    <%= pemilihanDisini.deskripsi %>
-                                                </td>
-
-                                            </tr>
+                                            </div>
                                             <% } %>
-                                                <% if (pemilihanDisini.fotoKampanye) { %>
-
-                                                    <tr>
-                                                        <th scope="row">Foto Lembaga</th>
-                                                        <td>
-                                                            <%= pemilihanDisini.fotoKampanye %>
-                                                        </td>
-
-                                                    </tr>
+                                                <% if (pemilihanDisini.videoKampanye) { %>
+                                                    <div class="row">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Video Kampanye</label>
+                                                        <div class="col-md-8 col-sm-6=8 col-xs-12">
+                                                            <%= pemilihanDisini.videoKampanye %>
+                                                        </div>
+                                                    </div>
                                                     <% } %>
-                                                        <% if (pemilihanDisini.videoKampanye) { %>
-
-                                                            <tr>
-                                                                <th scope="row">Video Kampanye</th>
-                                                                <td>
-                                                                    <%= pemilihanDisini.videoKampanye %>
-                                                                </td>
-
-                                                            </tr>
-                                                            <% } %>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
-                    <br>
-
-
-                    <form id="demo-form2" action="/dashboard/tambah-pemilihan" method="post" class="form-horizontal form-label-left">
-
-                    </form>
-
-
-                    <br>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel_hilih">
                             <div class="x_title">
-                                <h2><i class="fa fa-user"></i> Calon yang Akan dipilih <small>Float left</small></h2>
+                                <h2><i class="fa fa-user"></i> Calon</h2>
                                 <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    <li><a class="collapse-link-hilih "><i class="fa fa-chevron-up"></i></a>
                                     </li>
 
                                 </ul>
@@ -167,10 +131,6 @@
 
                                                     <img src="/public/production/images/user.png" alt="..." class="img-circle profile_img">
                                                 </center>
-
-
-
-
 
                                             </div>
 
@@ -203,11 +163,11 @@
                     </div>
                     <br>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel_hilih" style="border: none;padding: 0px 0px 0px 0px;">
                             <div class="x_title">
                                 <h2><i class="fa fa-users"></i> Pemilih <small>Float left</small></h2>
                                 <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    <li><a class="collapse-link-hilih"><i class="fa fa-chevron-up"></i></a>
                                     </li>
 
                                 </ul>

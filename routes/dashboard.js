@@ -104,11 +104,30 @@ router.post("/sidebar", async (req, res) => {
 
 // PUT
 
+router.put('/edit-pemilihan', async(req,res)=>{
+
+  res.json({ok:req.body})
+})
 
 // DELETE
 
 
 // GET
+
+router.get('/pemilihan/:slug/pengaturan', async(req,res)=>{
+  const {slug} = req.params;
+  const pemilihan = await PemiluModel.findOne({slug});
+
+  const waktuAwal = moment(pemilihan.waktuPelaksanaan.awal)
+  const waktuAkhir = moment(pemilihan.waktuPelaksanaan.akhir)
+
+  res.render("dashboard/pemilihan-edit", {
+    layout: "layouts/main-layout",
+    user: req.session.user,
+    pemilihan: req.session.pemilihan,
+    pemilihanDisini: pemilihan
+  });
+})
 
 router.get('/pemilihan/:slug', async(req,res)=>{
   const {slug} = req.params;
@@ -123,13 +142,15 @@ router.get('/pemilihan/:slug', async(req,res)=>{
   const waktuAkhir = moment(pemilihan.waktuPelaksanaan.akhir)
   const waktuSekarang = moment()
 
+  pemilihan.waktuAwal = waktuAwal
+  pemilihan.waktuAkhir = waktuAkhir
 
 
 
-  console.log('awal',  pemilihan.waktuPelaksanaan.awal)
-  console.log('akhir', waktuAkhir)
+  // console.log('awal',  pemilihan.waktuPelaksanaan.awal)
+  // console.log('akhir', waktuAkhir)
 
-  console.log('host', req.get('host'))
+  // console.log('host', req.get('host'))
 
   if(waktuAwal.diff(waktuSekarang) <= 0){
     if(waktuAkhir.diff(waktuSekarang) <= 0){
