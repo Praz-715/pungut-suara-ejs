@@ -318,6 +318,31 @@ body {
     padding: 4px
 }
 
+.img-circle.calon_img {
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    /* margin-left: 15%; */
+    z-index: 1000;
+    position: inherit;
+    /* margin-top: 20px; */
+    border: 1px solid rgba(52, 73, 94, 0.44);
+    padding: 4px
+}
+
+.img-cube.calon_img {
+    border-radius: 0;
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    /* margin-left: 15%; */
+    z-index: 1000;
+    position: inherit;
+    /* margin-top: 20px; */
+    /* border: 1px solid rgba(52, 73, 94, 0.44); */
+    padding: 4px
+}
+
 .profile_info {
     padding: 25px 10px 10px;
     width: 65%;
@@ -633,7 +658,7 @@ body {
 }
 
 .fixed_height_390 {
-    height: 390px
+    height: 400px
 }
 
 .fixed_height_200 {
@@ -3399,7 +3424,7 @@ ul.widget_profile_box li .profile_img {
 
 .widget_tally_box .name {
     text-align: center;
-    margin: 25px
+    margin: 10px
 }
 
 .widget_tally_box .name_title {

@@ -6,7 +6,6 @@ import flash from 'connect-flash';
 import cookieParser from "cookie-parser";
 import ConnectMongoDBSession from "connect-mongodb-session";
 import path from "path";
-import FloraEditor from 'wysiwyg-editor-node-sdk'
 
 
 import { database } from "./config/Database.js";
@@ -22,8 +21,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 const MongoDBSession = ConnectMongoDBSession(session)
 const store = new MongoDBSession({
-  // uri: 'mongodb+srv://teguh:ganteng@cluster0.r0ah9.mongodb.net/pungutSuara?retryWrites=true&w=majority',
-  uri: 'mongodb://teguh:ganteng@cluster0-shard-00-00.r0ah9.mongodb.net:27017,cluster0-shard-00-01.r0ah9.mongodb.net:27017,cluster0-shard-00-02.r0ah9.mongodb.net:27017/pungutSuara?ssl=true&replicaSet=atlas-58d3uw-shard-0&authSource=admin&retryWrites=true&w=majority',
+  uri: 'mongodb+srv://teguh:ganteng@cluster0.r0ah9.mongodb.net/pungutSuara?retryWrites=true&w=majority',
+  // uri: 'mongodb://teguh:ganteng@cluster0-shard-00-00.r0ah9.mongodb.net:27017,cluster0-shard-00-01.r0ah9.mongodb.net:27017,cluster0-shard-00-02.r0ah9.mongodb.net:27017/pungutSuara?ssl=true&replicaSet=atlas-58d3uw-shard-0&authSource=admin&retryWrites=true&w=majority',
+  // uri: 'mongodb://localhost:27017/pungutsuara',
   collection: 'mySession'
 })
 
@@ -33,7 +33,7 @@ app.use(express.json())
 // SetUp EJS
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true , limit: '50mb'}));
 app.use('/favicon.ico', express.static('images/favicon.ico'));
 
 // SetUp Flash
@@ -55,34 +55,6 @@ app.use(methodOverride('_method'));
 
 // Connect Database
 database()
-
-app.post('/delete_image', function (req, res) {
-
-  // Do delete.
-  FroalaEditor.Image.delete(req.body.src, function(err) {
-
-    if (err) {
-      return res.status(404).end(JSON.stringify(err));
-    }
-
-    return res.end();
-  });
-});
-
-app.post('/upload_image', function (req, res) {
-
-  // Store image.
-  FloraEditor.Image.upload(req, '/public/production/images/', function(err, data) {
-
-    // Return data.
-    if (err) {
-      return res.send(JSON.stringify(err));
-    }
-    res.send(data)
-  });
-
-  
-});
 
 app.use('/dashboard', auth ,dashboard)
 app.use('/auth',authentication)

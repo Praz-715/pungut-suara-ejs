@@ -4,36 +4,245 @@ import UserModel from "../models/UserModel.js";
 import PemiluModel from "../models/PemiluModel.js";
 import bcrypt from "bcrypt";
 import moment from "moment";
+import FloraEditor from 'wysiwyg-editor-node-sdk'
+
+import formidable from "formidable";
+
 
 const router = express.Router();
 
 moment.locale('id')
 
 
+function generateCalon(pemilihan) {
+  let nantinya = ''
+  if (pemilihan.modeGroup) {
+    let inian = []
+    for (let i = 0; i <= pemilihan.fieldGroup.length; i++) {
+      if (i < pemilihan.fieldGroup.length) {
+        const calonNya = pemilihan.calonDipilih.filter((e) => e.grup === pemilihan.fieldGroup[i])
+        inian.push({ grup: pemilihan.fieldGroup[i], calon: calonNya })
+      } else {
+        const calonNya = pemilihan.calonDipilih.filter((e) => !pemilihan.fieldGroup.includes(e.grup))
+        if (calonNya.length > 0) inian.push({ grup: 'Tidak Terdaftar', calon: calonNya })
+
+      }
+    }
+    // console.log(inian[0].calon)
+
+
+
+    inian.forEach((baris) => {
+      nantinya += `<div class='row'><center><h4>Grup ${baris.grup}</h4></center>`
+
+      if (baris.calon.length == 0) {
+        if (baris.grup === 'Tidak Terdaftar') {
+
+        } else {
+          nantinya += `<center>Tidak ada Calon</center>`
+        }
+      } else {
+        baris.calon.forEach((calon) => {
+          nantinya += `<div class="col-md-3 col-xs-12 widget widget_tally_box">
+          <div class="x_panel fixed_height_390">
+              <div class="x_content gambar">
+    
+                  <div class="text-center">
+    
+                      <img src="/${calon.foto}" alt="${calon.nama}" id="fotoCalonNya" class="img-circle calon_img">
+                  </div>
+    
+                
+                  <!-- <h4 class="name">No. 1</h4> -->
+                  <h4 class="name">${calon.nama}</h4>
+                  <div class="flex">
+                      <ul class="list-inline count2">
+                          <li>
+                              <h4>400</h4>
+                              <span>Dilihat</span>
+                          </li>
+                          <li>
+                              <h4>${calon.jumlahSuara}</h4>
+                              <span>Suara</span>
+                          </li>
+                          <li>
+                              <h4>10%</h4>
+                              <span>Persen</span>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="text-center">
+                  <p>Grup ${calon.grup}</p>
+                      <button type="button" class="btn btn-primary" onclick="showModalCalon('${calon._id}')">
+                          Buat Deskripsi
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      `
+        })
+      }
+      nantinya += `</div>`
+    })
+  } else {
+    pemilihan.calonDipilih.forEach((calon) => {
+      nantinya += `<div class="col-md-3 col-xs-12 widget widget_tally_box">
+      <div class="x_panel fixed_height_390">
+          <div class="x_content gambar">
+
+              <div class="text-center">
+
+                  <img src="/${calon.foto}" alt="${calon.nama}" id="fotoCalonNya" class="img-circle calon_img">
+              </div>
+
+            
+              <!-- <h4 class="name">No. 1</h4> -->
+              <h4 class="name">${calon.nama}</h4>
+              <div class="flex">
+                  <ul class="list-inline count2">
+                      <li>
+                          <h4>400</h4>
+                          <span>Dilihat</span>
+                      </li>
+                      <li>
+                          <h4>${calon.jumlahSuara}</h4>
+                          <span>Suara</span>
+                      </li>
+                      <li>
+                          <h4>10%</h4>
+                          <span>Persen</span>
+                      </li>
+                  </ul>
+              </div>
+              <div class="text-center">
+              <!-- <p>Grup ${calon.grup}</p> -->
+                  <button type="button" class="btn btn-primary" onclick="showModalCalon('${calon._id}')">
+                      Buat Deskripsi
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+  `
+    })
+  }
+  return nantinya
+
+
+
+}
+
+
 
 
 // POST
 
-router.post("/tambah-pemilihan", async(req, res) => {
+router.put('/edit-calon', UploadImage, async (req, res) => {
+
+  console.log('diedit calon')
+  const { slug, idCalonEdit, namaCalonEdit, grupCalonEdit, deskripsiCalonEdit, tidakada } = req.body
+
+
+  let calonUpdate = {
+    'calonDipilih.$.nama': namaCalonEdit,
+    'calonDipilih.$.deskripsi': deskripsiCalonEdit,
+  }
+
+
+  // jika ada foto
+  if (req.file) {
+    calonUpdate['calonDipilih.$.foto'] = req.file.path
+  }
+  // jika ada grup
+  if (grupCalonEdit) {
+    calonUpdate['calonDipilih.$.grup'] = grupCalonEdit
+  }
+
+
+  let pemilihan = await PemiluModel.findOneAndUpdate(
+    { slug, 'calonDipilih._id': idCalonEdit },
+    { $set: calonUpdate }
+  )
+
+  setTimeout(async () => {
+    pemilihan = await PemiluModel.findOne({ slug })
+    res.send(generateCalon(pemilihan))
+  }, 250)
+
+
+})
+
+router.post('/tambah-calon', UploadImage, async (req, res) => {
+  console.log('didalam calon')
+  if (!req.file) res.status(500)
+
+  const { namaCalon, grupCalon, slug } = req.body
+  const fotoPath = req.file.path
+  const calonBaru = { nama: namaCalon, foto: fotoPath }
+
+  if(grupCalon){
+    calonBaru.grup = grupCalon
+  }
+  
+  let pemilihan = await PemiluModel.findOne({ slug })
+
+  pemilihan.calonDipilih.push(calonBaru)
+  pemilihan.save()
+
+  res.send(generateCalon(pemilihan))
+})
+
+
+
+router.put('/change-group-field', async (req, res) => {
+  const { grup, slug } = req.body
+  // const  = { nama: "Teguh", foto: "bambang" }
+  let pemilihan = await PemiluModel.findOne({ slug })
+  console.log('grupnya  ', grup)
+
+  const fieldGroup = (grup) ? grup : []
+
+  pemilihan.fieldGroup = fieldGroup
+  pemilihan.save()
+
+
+  res.send(generateCalon(pemilihan))
+})
+
+router.post("/tambah-pemilihan", async (req, res) => {
   const { namaPemilihan, sifatPemilihan, waktuBerlangsung } = req.body;
 
   const waktunya = waktuBerlangsung.split(' - ');
   console.log(waktunya)
   const waktuAwal = new Date(waktunya[0])
   const waktuAkhir = new Date(waktunya[1])
+  const waktuSekarang = new Date()
 
   // console.log('waktu awal', waktuAwal.toLocaleString('id-ID'))
   // console.log('waktu akhir', waktuAkhir.toLocaleString('id-ID'))
 
+  let statusPemilihan
+
+  if (waktuAwal - waktuSekarang < 0) {
+    if (waktuAkhir - waktuSekarang < 0) {
+      statusPemilihan = 'telah berakhir'
+    } else {
+      statusPemilihan = 'sedang berlangsung'
+    }
+  } else {
+    statusPemilihan = 'akan berlanngsung'
+  }
 
   const pemilihan = {
-    pemilik       : req.session.user._id,
-    namaPemilihan : namaPemilihan,
+    pemilik: req.session.user._id,
+    namaPemilihan: namaPemilihan,
     pemilihanTerbuka: (sifatPemilihan === 'terbuka' || false),
     waktuPelaksanaan: {
       awal: waktuAwal,
       akhir: waktuAkhir
-    }
+    },
+    statusPemilihan
   }
 
   const response = await PemiluModel(pemilihan).save()
@@ -41,9 +250,9 @@ router.post("/tambah-pemilihan", async(req, res) => {
   // const response = {slug:'heheh'}
 
   res.redirect(`/dashboard/pemilihan/${response.slug}`)
- 
- 
- 
+
+
+
   // PemiluModel.insertMany({
   //   pemilik       : req.session.user._id,
   //   namaPemilihan : namaPemilihan,
@@ -54,16 +263,65 @@ router.post("/tambah-pemilihan", async(req, res) => {
   // res.send("ok");
 });
 
-router.post("/update-foto-profil", UploadImage, async (req, res) => {
-  if (!req.file) res.status(404).json({ msg: "foto belum di upload" });
-  const foto = req.file.path;
-  await UserModel.findByIdAndUpdate(req.session.user._id, {
-    foto: foto,
+
+router.post('/upload_image', function (req, res) {
+
+  // Store image.
+  FloraEditor.Image.upload(req, '/public/production/images/', function (err, data) {
+
+    // Return data.
+    if (err) {
+      return res.send(JSON.stringify(err));
+    }
+    res.send(data)
   });
-  res.redirect("/dashboard/profile");
+
+
 });
 
-router.post("/ganti-sandi", async (req, res) => {
+
+
+
+// PUT
+
+router.put('/edit-pemilihan', (req, res) => {
+  let { id, namaPemilihan, sifatPemilihan, waktuBerlangsung, modeGrup, perhitunganLive, deskripsi } = req.body
+
+
+  const waktunya = waktuBerlangsung.split(' - ');
+  console.log(waktunya)
+  const waktuAwal = new Date(waktunya[0])
+  const waktuAkhir = new Date(waktunya[1])
+
+
+  PemiluModel.findById(id, (err, data) => {
+    if (err) throw err
+    data.namaPemilihan = namaPemilihan;
+    data.pemilihanTerbuka = (sifatPemilihan === 'terbuka') ? true : false;
+    data.modeGroup = (modeGrup === 'ya') ? true : false;
+    data.perhitunganLive = (perhitunganLive === 'ya') ? true : false;
+    data.waktuPelaksanaan = { awal: waktuAwal, akhir: waktuAkhir }
+    // pemilihan.waktuPelaksanaan.akhir = waktuAkhir
+    data.deskripsi = deskripsi
+    data.save()
+
+  })
+
+  setTimeout(() => {
+    PemiluModel.findById(id, (err, data) => {
+      if (err) throw err
+      res.redirect(`/dashboard/pemilihan/${data.slug}`)
+    })
+  }, 300)
+
+
+  // res.json(await PemiluModel.findById(id))
+  // console.log(`/dashboard/pemilihan/${pemilihan._id}`)
+  // res.redirect(`/dashboard/pemilihan/${pemilihan._id}`)
+})
+
+
+router.put("/ganti-sandi", async (req, res) => {
   const { sandiBaru, sandiLama } = req.body;
 
   if (sandiBaru === sandiLama) {
@@ -85,7 +343,18 @@ router.post("/ganti-sandi", async (req, res) => {
   }
 });
 
-router.post("/update-profile", async (req, res) => {
+router.put("/update-foto-profil", UploadImage, async (req, res) => {
+  if (!req.file) res.status(404).json({ msg: "foto belum di upload" });
+  const foto = req.file.path;
+  await UserModel.findByIdAndUpdate(req.session.user._id, {
+    foto: foto,
+  });
+  res.redirect("/dashboard/profile");
+
+});
+
+
+router.put("/update-profile", async (req, res) => {
   if (!req.session.auth && !req.session.user) {
     res.status(405).json({ msg: "Anda ilegal" });
   }
@@ -96,58 +365,98 @@ router.post("/update-profile", async (req, res) => {
   if (response) res.json({ msg: "sukses", nama: response.nama });
 });
 
-router.post("/sidebar", async (req, res) => {
+
+router.put("/sidebar", async (req, res) => {
   const { sidebar } = req.body;
   await UserModel.findByIdAndUpdate(req.session.user._id, { sidebar })
   res.json({ sidebar });
 });
 
-// PUT
-
-router.put('/edit-pemilihan',(req,res)=>{
-  let {id,namaPemilihan, sifatPemilihan, waktuBerlangsung, modeGrup, perhitunganLive, deskripsi} = req.body
-
-  
-  const waktunya = waktuBerlangsung.split(' - ');
-  console.log(waktunya)
-  const waktuAwal = new Date(waktunya[0])
-  const waktuAkhir = new Date(waktunya[1])
-
-
-  PemiluModel.findById(id,(err,data)=>{
-    if(err)throw err
-    data.namaPemilihan = namaPemilihan;
-    data.pemilihanTerbuka = (sifatPemilihan === 'terbuka') ? true : false;
-    data.modeGroup = (modeGrup === 'ya') ? true : false;
-    data.perhitunganLive = (perhitunganLive === 'ya') ? true : false;
-    data.waktuPelaksanaan = {awal: waktuAwal, akhir: waktuAkhir}
-    // pemilihan.waktuPelaksanaan.akhir = waktuAkhir
-    data.deskripsi = deskripsi
-    data.save()
-
-  })
-
-  setTimeout(()=>{
-    PemiluModel.findById(id,(err,data)=>{
-      if(err)throw err
-      res.redirect(`/dashboard/pemilihan/${data.slug}`)
-    })
-  },300)
-
-
-  // res.json(await PemiluModel.findById(id))
-  // console.log(`/dashboard/pemilihan/${pemilihan._id}`)
-  // res.redirect(`/dashboard/pemilihan/${pemilihan._id}`)
-})
 
 // DELETE
+
+router.delete('/pemilihan', async (req, res) => {
+  await PemiluModel.findByIdAndRemove(req.body.id)
+  res.redirect('/dashboard')
+})
+
+router.delete('/delete-calon', async (req, res) => {
+  const { idCalon, slug } = req.body
+
+  let pemilihan = await PemiluModel.findOne({ slug })
+
+  pemilihan.calonDipilih.pull({ _id: idCalon })
+  pemilihan.save()
+
+  console.log(pemilihan.calonDipilih)
+  res.send(generateCalon(pemilihan))
+
+})
+
+router.delete('/delete-image', async (req, res) => {
+
+  // Do delete.
+  FroalaEditor.Image.delete(req.body.src, function (err) {
+
+    if (err) {
+      return res.status(404).end(JSON.stringify(err));
+    }
+
+    return res.end();
+  });
+});
 
 
 // GET
 
-router.get('/pemilihan/:slug/pengaturan', async(req,res)=>{
-  const {slug} = req.params;
-  const pemilihan = await PemiluModel.findOne({slug});
+router.get('/detail-calon/:slug/:idCalon', async (req, res) => {
+  const { slug, idCalon } = req.params
+  const pemilihan = await PemiluModel.findOne({ slug })
+
+  const calon = pemilihan.calonDipilih.filter(calon => calon._id == idCalon)[0]
+
+  const des = `<div id='editor'>
+                <textarea name="deskripsiCalonEdit" id='deskripsiCalonEdit' style='margin-top: 30px;'>
+                  ${calon.deskripsi}
+              </textarea>
+              </div>
+              <script>new FroalaEditor('#deskripsiCalonEdit', {
+                imageUploadURL: '/dashboard/upload_image',
+              });</script>
+              `
+
+  res.json({ calon, des })
+})
+
+router.get('/pemilihan/:slug/calon', async (req, res) => {
+  const { slug } = req.params;
+  const pemilihan = await PemiluModel.findOne({ slug });
+
+
+  res.render("dashboard/pemilihan-calon", {
+    layout: "layouts/main-layout",
+    user: req.session.user,
+    pemilihan: req.session.pemilihan,
+    pemilihanDisini: pemilihan
+  });
+})
+
+router.get('/pemilihan/:slug/pemilih', async (req, res) => {
+  const { slug } = req.params;
+  const pemilihan = await PemiluModel.findOne({ slug });
+
+
+  res.render("dashboard/pemilihan-pemilih", {
+    layout: "layouts/main-layout",
+    user: req.session.user,
+    pemilihan: req.session.pemilihan,
+    pemilihanDisini: pemilihan
+  });
+})
+
+router.get('/pemilihan/:slug/pengaturan', async (req, res) => {
+  const { slug } = req.params;
+  const pemilihan = await PemiluModel.findOne({ slug });
 
 
   res.render("dashboard/pemilihan-edit", {
@@ -158,43 +467,32 @@ router.get('/pemilihan/:slug/pengaturan', async(req,res)=>{
   });
 })
 
-router.get('/pemilihan/:slug', async(req,res)=>{
-  const {slug} = req.params;
-  let pemilihan = await PemiluModel.findOne({slug})
-  if(!pemilihan)  return res.redirect('/404')
+router.get('/pemilihan/:slug', async (req, res) => {
+  const { slug } = req.params;
+  let pemilihan = await PemiluModel.findOne({ slug })
+  if (!pemilihan) return res.redirect('/404')
 
   const waktuAwal = moment(pemilihan.waktuPelaksanaan.awal)
   const waktuAkhir = moment(pemilihan.waktuPelaksanaan.akhir)
   const waktuSekarang = moment()
 
-  pemilihan.waktuAwal = waktuAwal
-  pemilihan.waktuAkhir = waktuAkhir
-
-
-
-  // console.log('awal',  pemilihan.waktuPelaksanaan.awal)
-  // console.log('akhir', waktuAkhir)
-
-  // console.log('host', req.get('host'))
-
-  if(waktuAwal.diff(waktuSekarang) <= 0){
-    if(waktuAkhir.diff(waktuSekarang) <= 0){
-      console.log('waktu akhir beda dari sekarang', waktuAkhir.diff(waktuSekarang))
-      await PemiluModel.findOneAndUpdate({slug},{statusPemilihan:'telah berakhir'})
-    }else{
-      console.log('waktu akhir beda dari esle', waktuAkhir.diff(waktuSekarang))
-      await PemiluModel.findOneAndUpdate({slug},{statusPemilihan:'sedang berlangsung'})
+  if (waktuAwal.diff(waktuSekarang) <= 0) {
+    if (waktuAkhir.diff(waktuSekarang) <= 0) {
+      pemilihan.statusPemilihan = 'telah berakhir'
+    } else {
+      pemilihan.statusPemilihan = 'sedang berlangsung'
     }
-  }else{
-    await PemiluModel.findOneAndUpdate({slug},{statusPemilihan:'akan berlangsung'})
-    
+  } else {
+    pemilihan.statusPemilihan = 'akan berlangsung'
   }
-  pemilihan = await PemiluModel.findOne({slug})
-  // console.log(waktuAwal.format('D MMMM YYYY [pukul] HH.mm'))
-  
+  pemilihan.save()
+
+
+
   pemilihan.waktuAwal = waktuAwal.format('D MMMM YYYY [pukul] HH.mm').toString()
   pemilihan.waktuAkhir = waktuAkhir.format('D MMMM YYYY [pukul] HH.mm').toString()
   pemilihan.host = req.get('host')
+
 
   res.render("dashboard/pemilihan", {
     layout: "layouts/main-layout",
@@ -229,9 +527,9 @@ router.get("/", (req, res) => {
   });
 });
 
-// router.use('/', (req, res) => {
-//   res.render('404', { layout: 'layouts/buangan' })
-// })
+router.use('/', (req, res) => {
+  res.render('404', { layout: 'layouts/buangan' })
+})
 
 
 export default router;

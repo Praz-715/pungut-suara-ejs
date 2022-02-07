@@ -106,7 +106,7 @@ function init_sidebar() {
         .removeClass("active");
       sessionStorage.setItem("sidebar", "kedalam");
 	  fetch('/dashboard/sidebar', {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 		  'Content-Type': 'application/json'
 		  // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -123,7 +123,7 @@ function init_sidebar() {
         .removeClass("active-sm");
       sessionStorage.setItem("sidebar", "keluar");
 	  fetch('/dashboard/sidebar', {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 		  'Content-Type': 'application/json'
 		  // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -1341,6 +1341,8 @@ function init_TagsInput() {
     $("#tags_1").tagsInput({
       width: "auto",
     });
+
+    
   }
 }
 

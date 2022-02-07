@@ -119,6 +119,213 @@ const columnData = [
 ]
 
 
+function showModalCalon(id) {
+  // console.log(id)
+  $.ajax({
+    url: `/dashboard/detail-calon/${window.location.href.split('/pemilihan/')[1].split('/')[0]}/${id}`,
+    success: function (data) {
+      // console.log('hahah', data.deskripsi)
+      $("#deskripsiBabi").html(data.des)
+      $("#namaCalonEdit").val(data.calon.nama)
+      $("#grupCalonEdit").val(data.calon.grup)
+      $("#deleteCalonBtn").val(data.calon._id)
+      $("#idCalonEdit").val(data.calon._id)
+      $('.bs-example-modal-lg').modal('show')
+
+    }
+  });
+}
+
+
+
+$(function () {
+
+
+
+
+  $('#editCalonNya').submit(function (event) {
+    event.preventDefault()
+    let formData = new FormData()
+    let idCalon = $('#idCalonEdit')
+    let namaCalon = $('#namaCalonEdit')
+    let btnEdit = $('#saveEdit')
+
+    // jika ada grupnya 
+    if ($('#grupCalonEdit').length) {
+      let grupCalon = $('#grupCalonEdit')
+      formData.append('grupCalonEdit', grupCalon.val())
+      grupCalon.prop('disabled', true)
+    }
+    if ($('#fotoCalonEdit').length) {
+      let fotoCalonEdit = document.getElementById("fotoCalonEdit").files[0]
+      formData.append('gantiFoto', fotoCalonEdit)
+      $('#fotoCalonEdit').prop('disabled', true)
+    }
+
+
+    formData.append('idCalonEdit', idCalon.val())
+    formData.append('namaCalonEdit', namaCalon.val())
+    formData.append('deskripsiCalonEdit', $('#deskripsiCalonEdit')[0]['data-froala.editor'].html.get())
+    formData.append('slug', window.location.href.split('/pemilihan/')[1].split('/')[0])
+
+    // console.log('jika tidak ada', $('#grupCalonEdit').length)
+
+    // const data = {
+    //   idCalonEdit: idCalon.val(),
+    //   namaCalonEdit: namaCalon.val(),
+    //   grupCalonEdit: grupCalon.val(),
+    //   deskripsiCalonEdit: $('#deskripsiCalonEdit')[0]['data-froala.editor'].html.get(),
+    //   slug: window.location.href.split('/pemilihan/')[1].split('/')[0]
+    // }
+
+    // console.log(data)
+
+    // console.log($('#deskripsiCalonEdit')[0]['data-froala.editor'].prop('disabled', true))
+    // console.log($('#deskripsiCalonEdit')[0]['data-froala.editor'].html.get())
+
+
+
+    namaCalon.prop('disabled', true)
+    btnEdit.html(`<i class='fa fa-spin fa-spinner'></i> Tunggu`)
+
+
+    $.ajax({
+      url: '/dashboard/edit-calon',
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      method: 'PUT',
+      type: 'PUT', // For jQuery < 1.9
+      success: function (data) {
+        $("#calon").html(data)
+        namaCalon.prop('disabled', false)
+        if ($('#grupCalonEdit').length) {
+          $('#grupCalonEdit').prop('disabled', false)
+        }
+        if ($('#fotoCalonEdit').length) {
+          $('#fotoCalonEdit').prop('disabled', false).val('')
+        }
+        btnEdit.html(`Simpan Perubahan`)
+        $('.bs-example-modal-lg').modal('hide')
+
+      }
+    });
+
+
+  })
+
+  $('#kotakBulet').on('click', function (event) {
+    // console.log('kotak bulet segita', $('#kotakBulet').is(':checked'))
+
+    $('.calon_img').toggleClass('img-circle img-cube')
+    // console.log($('.calon_img').attr('class'))
+  })
+
+  $('#deleteCalonBtn').on('click', function (event) {
+
+    // confirm("apa anda yakin")
+
+    if (confirm("apa anda yakin")) {
+      $(this).html(`<i class='fa fa-spin fa-spinner'></i> Tunggu`)
+      $.ajax({
+        type: "DELETE",
+        url: '/dashboard/delete-calon',
+        data: { idCalon: $(this).val(), slug: window.location.href.split('/pemilihan/')[1].split('/')[0] },
+        success: function (data) {
+          $("#calon").html(data)
+          $('.bs-example-modal-lg').modal('hide')
+        },
+        datatype: 'json'
+      })
+    } else {
+      return;
+    }
+
+  })
+
+
+  $('#tambahCalon').submit(function (event) {
+    event.preventDefault()
+    let formData = new FormData()
+    let fotoCalon = $('#fotoCalon')
+    let namaCalon = $('#namaCalon')
+    let btnTambahCalon = $('#btnTambahCalon')
+
+    if($('#grupCalon').length){
+      let grupCalon = $('#grupCalon')
+      grupCalon.prop('disabled', true)
+      formData.append('grupCalon', grupCalon.val())
+    }
+
+
+
+    fotoCalon.prop('disabled', true)
+    namaCalon.prop('disabled', true)
+    btnTambahCalon.html(`<i class='fa fa-spin fa-spinner'></i> Tunggu`)
+
+    formData.append('gantiFoto', document.getElementById("fotoCalon").files[0])
+    formData.append('namaCalon', namaCalon.val())
+    formData.append('slug', window.location.href.split('/pemilihan/')[1].split('/')[0])
+
+    // console.log(namaCalon)
+
+    $.ajax({
+      url: '/dashboard/tambah-calon',
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      method: 'POST',
+      type: 'POST', // For jQuery < 1.9
+      success: function (data) {
+        $("#calon").html(data)
+        fotoCalon.prop('disabled', false).val('')
+        namaCalon.prop('disabled', false).val('')
+        if($('#grupCalon').length){
+          $('#grupCalon').prop('disabled', false)
+        }
+        btnTambahCalon.html(`Hapus`)
+        btnTambahCalon.html(`Tambah Lagi`)
+
+      }
+    });
+  })
+})
+
+
+
+$(function () {
+  $('#tagGrup').on('change', function (event) {
+    var $element = $(event.target)
+    // console.log(JSON.stringify($element.tagsinput('items')))
+    if (!$element.data('tagsinput'))
+      return;
+
+    $.ajax({
+      type: "PUT",
+      url: '/dashboard/change-group-field',
+      data: { grup: $element.tagsinput('items'), slug: window.location.href.split('/pemilihan/')[1].split('/')[0] },
+      success: function (data) {
+        $("#calon").html(data)
+      },
+      datatype: 'json'
+    })
+    $('#grupCalon').html('')
+    $('#grupCalonEdit').html('')
+    $.each($element.tagsinput('items'), function (i, item) {
+      $('#grupCalon').append($('<option>', {
+        value: item,
+        text: item
+      }));
+      $('#grupCalonEdit').append($('<option>', {
+        value: item,
+        text: item
+      }));
+    });
+
+  }).trigger('change');
+});
 
 function textAreaFlora() {
   const deskrpsi = document.getElementById('deskripsi')
@@ -128,15 +335,15 @@ function textAreaFlora() {
   }
 
   var editor = new FroalaEditor('#deskripsi', {
-    imageUploadURL: '/upload_image'
+    imageUploadURL: '/dashboard/upload_image'
   });
   editor.opts.events['image.removed'] = function (e, editor, $img) {
     $.ajax({
       // Request method.
-      method: 'POST',
+      method: 'DELETE',
 
       // Request URL.
-      url: '/delete_image',
+      url: '/dashboard/delete_image',
 
       // Request params.
       data: {
@@ -166,9 +373,9 @@ function waktuBerjalan() {
   const waktuAwal = moment(waktuPelaksanaan.awal);
   const waktuAkhir = moment(waktuPelaksanaan.akhir);
 
-  console.log('waktu pelaksanaan', waktuPelaksanaan)
-  console.log('waktu awal', waktuAwal.toString())
-  console.log('waltu akhir', waktuAkhir.toString())
+  // console.log('waktu pelaksanaan', waktuPelaksanaan)
+  // console.log('waktu awal', waktuAwal.toString())
+  // console.log('waltu akhir', waktuAkhir.toString())
 
   // console.log('countdate',countDownDate)
   let x = setInterval(function () {
@@ -234,7 +441,7 @@ function gantiSandi() {
   btnUbahSandi.innerHTML = "<i class='fa fa-spin fa-spinner'></i> Tunggu"
 
   fetch('/dashboard/ganti-sandi', {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -282,6 +489,70 @@ function gantiSandi() {
 
 }
 
+
+function tambahCalonGrup() {
+  const form = document.getElementById('tambahCalon');
+  const nama = form.elements['namaCalon'].value
+  const grup = form.elements['grup'].value
+  const foto = form.elements['foto'].files[0]
+
+  // const data = { nama, grup, foto }
+
+  const hmmmmm = new FormData(form)
+  hmmmmm.append('nama', nama)
+  hmmmmm.append('grup', grup)
+  hmmmmm.append('foto', foto)
+  // console.log('hahahahahahhnnn', hmmmmm)
+
+  fetch('/dashboard/tambah-calon', {
+    method: 'POST',
+    headers: {
+      // 'Content-Type': 'application/json'
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    credentials: 'include',
+    body: hmmmmm
+  })
+    .then(response => console.log('ok'))
+    // .then(data => {
+    //   console.log('Success:', data);
+    // const semuaNama = document.querySelectorAll('#idnama');
+    // semuaNama.forEach((nama) => {
+    //   nama.innerHTML = data.nama
+    // })
+    // simpan.innerHTML = "Simpan"
+    // nama.disabled = false
+    // nohp.disabled = false
+    // simpan.disabled = false
+    // return new PNotify({
+    //   title: 'Pembaruan profil',
+    //   text: data.msg,
+    //   type: 'info',
+    //   styling: 'bootstrap3'
+    // });
+    // })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+
+  // $.ajax({
+  //   type: "POST",
+  //   url: '/dashboard/tambah-calon',
+  //   data: formData,
+  //   success: function (data) {
+  //     alert('ok')
+  //     // $("#calon").html(data)
+  //   },
+  //   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+  //   processData: 'true',
+  //   // datatype: false
+  // })
+
+
+  // console.log(nama, grup, foto)
+}
+
 function updateProfile() {
   const form = document.getElementById('updateProfile');
   const nama = form.elements['nama']
@@ -300,7 +571,7 @@ function updateProfile() {
   simpan.innerHTML = "<i class='fa fa-spin fa-spinner'></i> Tunggu"
 
   fetch('/dashboard/update-profile', {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',

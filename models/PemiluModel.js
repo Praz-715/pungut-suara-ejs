@@ -5,8 +5,9 @@ mongoose.plugin(URLslug);
 
 const calonDipilih = new mongoose.Schema({
     nama: { type: String },
-    deskripsi: { type: String },
+    deskripsi: { type: String, default:"<h1>Buat Deskripsi Disini</h1>" },
     foto: { type: String },
+    grup: { type: String , default: 'tidak ada'},
     jumlahSuara: { type: Number, default: 0 }
 })
 
@@ -32,7 +33,7 @@ const pemiluSchema = new mongoose.Schema({
     waktuPelaksanaan: waktuPelaksanaan,
     
     // status pemilu
-    statusPemilihan: { type: String, required: false, default: 'akan berlangsung' },
+    statusPemilihan: { type: String, required: false },
 
 
     // optional
@@ -51,4 +52,9 @@ const pemiluSchema = new mongoose.Schema({
     pemilih: [mongoose.Schema.Types.Mixed]
 })
 
-export default mongoose.model("pemilu", pemiluSchema);
+const PemiluModel = mongoose.model("pemilu", pemiluSchema)
+// const CalonModel = mongoose.model("calonDipilih", calonDipilih)
+
+// export {CalonModel}
+
+export default PemiluModel
