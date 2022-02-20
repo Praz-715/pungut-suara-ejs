@@ -10,6 +10,7 @@ import path from "path";
 
 import { database } from "./config/Database.js";
 import dashboard from "./routes/dashboard.js";
+import landing from "./routes/landing.js"
 import authentication from "./routes/authentication.js";
 import home from "./routes/home.js";
 
@@ -21,9 +22,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 const MongoDBSession = ConnectMongoDBSession(session)
 const store = new MongoDBSession({
-  uri: 'mongodb+srv://teguh:ganteng@cluster0.r0ah9.mongodb.net/pungutSuara?retryWrites=true&w=majority',
+  // uri: 'mongodb+srv://teguh:ganteng@cluster0.r0ah9.mongodb.net/pungutSuara?retryWrites=true&w=majority',
   // uri: 'mongodb://teguh:ganteng@cluster0-shard-00-00.r0ah9.mongodb.net:27017,cluster0-shard-00-01.r0ah9.mongodb.net:27017,cluster0-shard-00-02.r0ah9.mongodb.net:27017/pungutSuara?ssl=true&replicaSet=atlas-58d3uw-shard-0&authSource=admin&retryWrites=true&w=majority',
-  // uri: 'mongodb://localhost:27017/pungutsuara',
+  uri: 'mongodb://localhost:27017/pungutsuara',
   collection: 'mySession'
 })
 
@@ -59,7 +60,7 @@ database()
 app.use('/dashboard', auth ,dashboard)
 app.use('/auth',authentication)
 
-app.use('/', home)
+app.use('/', landing)
 
 app.use('/', (req,res)=>{
   res.render('404',{layout: 'layouts/buangan'})

@@ -5,10 +5,19 @@ mongoose.plugin(URLslug);
 
 const calonDipilih = new mongoose.Schema({
     nama: { type: String },
-    deskripsi: { type: String, default:"<h1>Buat Deskripsi Disini</h1>" },
+    deskripsi: { type: String, default: "<h1>Buat Deskripsi Disini</h1>" },
     foto: { type: String },
-    grup: { type: String , default: 'tidak ada'},
+    grup: { type: String, default: 'tidak ada' },
     jumlahSuara: { type: Number, default: 0 }
+})
+
+const fieldPemilih = new mongoose.Schema({
+    namaField: { type: String },
+    tipeField: { type: String },
+    key: { type: Boolean, default: false },
+    dataField: { type: [String] },
+    harusDiisi: { type: Boolean, default: false },
+    html: String
 })
 
 const waktuPelaksanaan = new mongoose.Schema({
@@ -20,7 +29,7 @@ const pemiluSchema = new mongoose.Schema({
     //id pemilik
     pemilik: mongoose.Schema.Types.ObjectId,
     //slug
-    
+
     namaPemilihan: { type: String, required: true },
 
     slug: { type: String, slug: 'namaPemilihan', unique: true },
@@ -31,7 +40,7 @@ const pemiluSchema = new mongoose.Schema({
     perhitunganLive: { type: Boolean, required: false, default: false },
 
     waktuPelaksanaan: waktuPelaksanaan,
-    
+
     // status pemilu
     statusPemilihan: { type: String, required: false },
 
@@ -43,12 +52,12 @@ const pemiluSchema = new mongoose.Schema({
 
 
     // Mode Group
-    modeGroup : {type: Boolean, default: false},
+    modeGroup: { type: Boolean, default: false },
     fieldGroup: [String],
 
 
     calonDipilih: [calonDipilih],
-    fieldPemilih: [String],
+    fieldPemilih: [fieldPemilih],
     pemilih: [mongoose.Schema.Types.Mixed]
 })
 

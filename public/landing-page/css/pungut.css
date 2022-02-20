@@ -1,0 +1,16 @@
+.site_title i {
+    font-size: 27px;
+    border: 2px solid #EAEAEA;
+    padding: 5px 6px;
+    border-radius: 50%
+}
+
+.navbar-expand-sm .navbar-collapse {
+    /* display: flex!important; */
+    justify-content: end;
+    flex-basis: auto;
+}
+
+.navbar-nav a:hover {
+    background-color: #EAEAEA;
+}

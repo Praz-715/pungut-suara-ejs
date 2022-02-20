@@ -1093,6 +1093,26 @@ a:focus {
     background: #F5F7FA
 }
 
+.panel_toolbox_x {
+    float: right;
+    /* min-width: 70px */
+}
+
+.panel_toolbox_x>li {
+    float: left;
+    cursor: pointer
+}
+
+.panel_toolbox_x>li>a {
+    padding: 5px;
+    color: #C5C7CB;
+    font-size: 14px
+}
+
+.panel_toolbox_x>li>a:hover {
+    background: #F5F7FA
+}
+
 .line_30 {
     line-height: 30px
 }
@@ -2323,7 +2343,7 @@ h4.graph_title {
 .tile-stats .count,
 .tile-stats h3,
 .tile-stats p {
-    position: relative;
+    /* position: relative; */
     margin: 0;
     margin-left: 10px;
     z-index: 5;

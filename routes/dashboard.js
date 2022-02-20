@@ -138,39 +138,25 @@ function generateCalon(pemilihan) {
 
 // POST
 
-router.put('/edit-calon', UploadImage, async (req, res) => {
+router.post('/tambah-key', async(req,res)=>{
+  console.log(req.body)
+  res.json(req.body)
+})
 
-  console.log('diedit calon')
-  const { slug, idCalonEdit, namaCalonEdit, grupCalonEdit, deskripsiCalonEdit, tidakada } = req.body
+router.post('/tambah-field-pemilih', async (req, res) => {
+  const { slug, namaField, tipeField, harusDiisi, dataField } = req.body
+  // res.json(req.body)
 
+  let fieldBaru = { namaField, tipeField }
+  if (harusDiisi) fieldBaru.harusDiisi = harusDiisi
+  if (dataField.length > 1) fieldBaru.dataField = dataField.split(";")
 
-  let calonUpdate = {
-    'calonDipilih.$.nama': namaCalonEdit,
-    'calonDipilih.$.deskripsi': deskripsiCalonEdit,
-  }
+  const pemilihan = await PemiluModel.findOne({ slug })
+  console.log(pemilihan)
 
-
-  // jika ada foto
-  if (req.file) {
-    calonUpdate['calonDipilih.$.foto'] = req.file.path
-  }
-  // jika ada grup
-  if (grupCalonEdit) {
-    calonUpdate['calonDipilih.$.grup'] = grupCalonEdit
-  }
-
-
-  let pemilihan = await PemiluModel.findOneAndUpdate(
-    { slug, 'calonDipilih._id': idCalonEdit },
-    { $set: calonUpdate }
-  )
-
-  setTimeout(async () => {
-    pemilihan = await PemiluModel.findOne({ slug })
-    res.send(generateCalon(pemilihan))
-  }, 250)
-
-
+  pemilihan.fieldPemilih.push(fieldBaru)
+  pemilihan.save()
+  res.redirect(`/dashboard/pemilihan/${slug}/pemilih`)
 })
 
 router.post('/tambah-calon', UploadImage, async (req, res) => {
@@ -181,31 +167,14 @@ router.post('/tambah-calon', UploadImage, async (req, res) => {
   const fotoPath = req.file.path
   const calonBaru = { nama: namaCalon, foto: fotoPath }
 
-  if(grupCalon){
+  if (grupCalon) {
     calonBaru.grup = grupCalon
   }
-  
+
   let pemilihan = await PemiluModel.findOne({ slug })
 
   pemilihan.calonDipilih.push(calonBaru)
   pemilihan.save()
-
-  res.send(generateCalon(pemilihan))
-})
-
-
-
-router.put('/change-group-field', async (req, res) => {
-  const { grup, slug } = req.body
-  // const  = { nama: "Teguh", foto: "bambang" }
-  let pemilihan = await PemiluModel.findOne({ slug })
-  console.log('grupnya  ', grup)
-
-  const fieldGroup = (grup) ? grup : []
-
-  pemilihan.fieldGroup = fieldGroup
-  pemilihan.save()
-
 
   res.send(generateCalon(pemilihan))
 })
@@ -243,6 +212,10 @@ router.post("/tambah-pemilihan", async (req, res) => {
       akhir: waktuAkhir
     },
     statusPemilihan
+  }
+
+  if (!pemilihan.pemilihanTerbuka) {
+    pemilihan.fieldPemilih = [{ namaField: "Kunci Masuk", tipeField: "text", key: true, harusDiisi: true }]
   }
 
   const response = await PemiluModel(pemilihan).save()
@@ -284,6 +257,77 @@ router.post('/upload_image', function (req, res) {
 
 // PUT
 
+router.put('/edit-field-pemilih', async (req, res) => {
+  const { slug, namaFieldEdit, tipefieldEdit, harusDiisiEdit, dataFieldEdit, idField } = req.body
+  // res.json(req.body)
+
+  let fieldEdit = { 'fieldPemilih.$.namaField': namaFieldEdit, 'fieldPemilih.$.tipeField': tipefieldEdit }
+  harusDiisiEdit ? fieldEdit['fieldPemilih.$.harusDiisi'] = harusDiisiEdit.length>0 : fieldEdit['fieldPemilih.$.harusDiisi'] = false
+  if (dataFieldEdit.length > 1) fieldEdit['fieldPemilih.$.dataField'] = dataFieldEdit.split(";")
+  console.log(fieldEdit)
+  const pemilihan = await PemiluModel.findOneAndUpdate({ slug, 'fieldPemilih._id': idField }, { $set: fieldEdit })
+  // console.log('pemilihannya',pemilihan)
+
+  res.redirect(`/dashboard/pemilihan/${slug}/pemilih`)
+})
+
+router.put('/change-group-field', async (req, res) => {
+  const { grup, slug } = req.body
+  // const  = { nama: "Teguh", foto: "bambang" }
+  let pemilihan = await PemiluModel.findOne({ slug })
+  console.log('grupnya  ', grup)
+
+  const fieldGroup = (grup) ? grup : []
+
+  pemilihan.fieldGroup = fieldGroup
+  pemilihan.save()
+
+
+  res.send(generateCalon(pemilihan))
+})
+
+
+router.put('/edit-calon', UploadImage, async (req, res) => {
+
+  console.log('diedit calon')
+  const { slug, idCalonEdit, namaCalonEdit, grupCalonEdit, deskripsiCalonEdit, tidakada } = req.body
+
+
+  let calonUpdate = {
+    'calonDipilih.$.nama': namaCalonEdit,
+    'calonDipilih.$.deskripsi': deskripsiCalonEdit,
+  }
+
+
+  // jika ada foto
+  if (req.file) {
+    calonUpdate['calonDipilih.$.foto'] = req.file.path
+  }
+  // jika ada grup
+  if (grupCalonEdit) {
+    calonUpdate['calonDipilih.$.grup'] = grupCalonEdit
+  }
+
+
+  let pemilihan = await PemiluModel.findOneAndUpdate(
+    { slug, 'calonDipilih._id': idCalonEdit },
+    { $set: calonUpdate }
+  )
+
+  setTimeout(async () => {
+    pemilihan = await PemiluModel.findOne({ slug })
+    res.send(generateCalon(pemilihan))
+  }, 250)
+
+
+})
+
+
+
+
+
+
+
 router.put('/edit-pemilihan', (req, res) => {
   let { id, namaPemilihan, sifatPemilihan, waktuBerlangsung, modeGrup, perhitunganLive, deskripsi } = req.body
 
@@ -295,12 +339,39 @@ router.put('/edit-pemilihan', (req, res) => {
 
 
   PemiluModel.findById(id, (err, data) => {
+    console.log("ini diedti woe")
     if (err) throw err
     data.namaPemilihan = namaPemilihan;
     data.pemilihanTerbuka = (sifatPemilihan === 'terbuka') ? true : false;
     data.modeGroup = (modeGrup === 'ya') ? true : false;
     data.perhitunganLive = (perhitunganLive === 'ya') ? true : false;
     data.waktuPelaksanaan = { awal: waktuAwal, akhir: waktuAkhir }
+
+    console.log("dalam edit, apakah true", typeof data.fieldPemilih != 'undefined' &&
+      data.fieldPemilih.length > 0 &&
+      !data.pemilihanTerbuka)
+    if (typeof data.fieldPemilih != 'undefined' &&
+      data.fieldPemilih.length > 0 &&
+      !data.pemilihanTerbuka) {
+
+      console.log("cari filter == true", data.fieldPemilih.filter(e => e.key == true).length)
+      if (data.fieldPemilih.filter(e => e.key === true).length) {
+        console.log('ini ada')
+      } else {
+        console.log('ini kosong')
+        data.fieldPemilih.push({
+          $each: [{ namaField: "Kunci Masuk", tipeField: "text", key: true, harusDiisi: true }],
+          $position: 0
+        }
+
+        )
+
+      }
+    } else {
+      if (data.fieldPemilih.length == 0 && !data.pemilihanTerbuka) {
+        data.fieldPemilih.push({ namaField: "Kunci Masuk", tipeField: "text", key: true, harusDiisi: true })
+      }
+    }
     // pemilihan.waktuPelaksanaan.akhir = waktuAkhir
     data.deskripsi = deskripsi
     data.save()
@@ -392,6 +463,18 @@ router.delete('/delete-calon', async (req, res) => {
   res.send(generateCalon(pemilihan))
 
 })
+router.delete('/delete-field-pemilih', async (req, res) => {
+  const { idField, slug } = req.body
+
+  let pemilihan = await PemiluModel.findOne({ slug })
+
+  pemilihan.fieldPemilih.pull({ _id: idField })
+  pemilihan.save()
+
+  console.log(pemilihan.calonDipilih)
+  res.send(generateCalon(pemilihan))
+
+})
 
 router.delete('/delete-image', async (req, res) => {
 
@@ -426,6 +509,15 @@ router.get('/detail-calon/:slug/:idCalon', async (req, res) => {
               `
 
   res.json({ calon, des })
+})
+
+router.get('/detail-field-pemilih/:slug/:idField', async (req, res) => {
+  const { slug, idField } = req.params
+  const pemilihan = await PemiluModel.findOne({ slug })
+
+  const fieldPemilih = pemilihan.fieldPemilih.filter(field => field._id == idField)[0]
+  console.log('field pemilih', fieldPemilih)
+  res.json(fieldPemilih)
 })
 
 router.get('/pemilihan/:slug/calon', async (req, res) => {

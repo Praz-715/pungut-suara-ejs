@@ -1423,6 +1423,20 @@ function init_wysiwyg() {
         this.value = "";
         $(this).change();
       });
+    $(".dropdown-menu-landing input")
+      .click(function () {
+        return false;
+      })
+      .change(function () {
+        $(this)
+          .parent(".dropdown-menu")
+          .siblings(".dropdown-toggle")
+          .dropdown("toggle");
+      })
+      .keydown("esc", function () {
+        this.value = "";
+        $(this).change();
+      });
 
     $("[data-role=magic-overlay]").each(function () {
       var overlay = $(this),
