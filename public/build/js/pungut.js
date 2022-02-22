@@ -283,6 +283,8 @@ $(function () {
       datatype: 'json',// For jQuery < 1.9
       success: function (data) {
         alert(JSON.stringify(data))
+        btnTambahKey.html(`Tambah`)
+
         // $("#calon").html(data)
         // namaCalon.prop('disabled', false)
         // if ($('#grupCalonEdit').length) {

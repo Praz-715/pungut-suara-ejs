@@ -5,6 +5,7 @@ import PemiluModel from "../models/PemiluModel.js";
 import bcrypt from "bcrypt";
 import moment from "moment";
 import FloraEditor from 'wysiwyg-editor-node-sdk'
+import mongoose from "mongoose";
 
 import formidable from "formidable";
 
@@ -138,9 +139,49 @@ function generateCalon(pemilihan) {
 
 // POST
 
-router.post('/tambah-key', async(req,res)=>{
-  console.log(req.body)
-  res.json(req.body)
+router.post('/tambah-key', async (req, res) => {
+  const { denganCara, slug, data, banyakToken } = req.body
+  const pemilu = await PemiluModel.findOne({ slug })
+  const kunciMasuk = pemilu.fieldPemilih.filter(e => e.key)[0]
+  const pemilihYangSudahTerdaftar = pemilu.pemilih.map(e => e.key)
+
+  console.log('pemilih yg sudah terdaftar: ', pemilihYangSudahTerdaftar)
+  let datanya
+  if (denganCara == 'buatToken') {
+
+  } else if (denganCara == 'buatManual') {
+
+  } else if (denganCara == 'buatImportExcel') {
+    datanya = JSON.parse(data)
+    const ambilDuplikat = datanya.filter((s => v => s.has(v) || !s.add(v))(new Set))
+    if (ambilDuplikat.length > 0) {
+      datanya = [... new Set(datanya)]
+      res.json(`Terdapat data duplikat ${datanya.length} ditambahkan`)
+    }
+
+
+    // hapus isi pemilih
+    // await PemiluModel.findOneAndUpdate({ slug }, { $set: { pemilih: [] } })
+
+
+
+    // datanya.forEach((kambing, index)=>{
+    //   pemilu.pemilih.push({_id: mongoose.mongo.ObjectId(), key: kambing})
+    // })
+    // pemilu.save()
+
+
+
+    res.json(`${datanya.length} ditambahkan`)
+    // console.log(datanya.length)
+
+
+
+
+  } else {
+    res.status(503).json({ msg: "kambing" })
+  }
+  res.json(`Data duplikat ---- ${datanya.length}`)
 })
 
 router.post('/tambah-field-pemilih', async (req, res) => {
@@ -262,7 +303,7 @@ router.put('/edit-field-pemilih', async (req, res) => {
   // res.json(req.body)
 
   let fieldEdit = { 'fieldPemilih.$.namaField': namaFieldEdit, 'fieldPemilih.$.tipeField': tipefieldEdit }
-  harusDiisiEdit ? fieldEdit['fieldPemilih.$.harusDiisi'] = harusDiisiEdit.length>0 : fieldEdit['fieldPemilih.$.harusDiisi'] = false
+  harusDiisiEdit ? fieldEdit['fieldPemilih.$.harusDiisi'] = harusDiisiEdit.length > 0 : fieldEdit['fieldPemilih.$.harusDiisi'] = false
   if (dataFieldEdit.length > 1) fieldEdit['fieldPemilih.$.dataField'] = dataFieldEdit.split(";")
   console.log(fieldEdit)
   const pemilihan = await PemiluModel.findOneAndUpdate({ slug, 'fieldPemilih._id': idField }, { $set: fieldEdit })

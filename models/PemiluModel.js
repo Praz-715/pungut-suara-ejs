@@ -25,6 +25,10 @@ const waktuPelaksanaan = new mongoose.Schema({
     akhir: { type: Date },
 });
 
+const pemilih = new mongoose.Schema({
+    data: mongoose.Schema.Types.Mixed
+})
+
 const pemiluSchema = new mongoose.Schema({
     //id pemilik
     pemilik: mongoose.Schema.Types.ObjectId,
