@@ -284,6 +284,8 @@ $(function () {
       success: function (data) {
         alert(JSON.stringify(data))
         btnTambahKey.html(`Tambah`)
+        $('#isiImport').val('')
+        $('#displayFieldImportExcel').hide()
 
         // $("#calon").html(data)
         // namaCalon.prop('disabled', false)

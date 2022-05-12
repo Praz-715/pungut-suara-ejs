@@ -105,15 +105,15 @@ function init_sidebar() {
         .addClass("active-sm")
         .removeClass("active");
       sessionStorage.setItem("sidebar", "kedalam");
-	  fetch('/dashboard/sidebar', {
-		method: 'PUT',
-		headers: {
-		  'Content-Type': 'application/json'
-		  // 'Content-Type': 'application/x-www-form-urlencoded',
-		},
-		credentials: 'include',
-		body: JSON.stringify({sidebar:'nav-sm'})
-	  })
+      fetch('/dashboard/sidebar', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ sidebar: 'nav-sm' })
+      })
       console.log("sesi", sessionStorage.getItem("sidebar"));
     } else {
       $SIDEBAR_MENU.find("li.active-sm ul").show();
@@ -122,15 +122,15 @@ function init_sidebar() {
         .addClass("active")
         .removeClass("active-sm");
       sessionStorage.setItem("sidebar", "keluar");
-	  fetch('/dashboard/sidebar', {
-		method: 'PUT',
-		headers: {
-		  'Content-Type': 'application/json'
-		  // 'Content-Type': 'application/x-www-form-urlencoded',
-		},
-		credentials: 'include',
-		body: JSON.stringify({sidebar:'nav-md'})
-	  })
+      fetch('/dashboard/sidebar', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ sidebar: 'nav-md' })
+      })
       console.log("sesi", sessionStorage.getItem("sidebar"));
     }
 
@@ -184,46 +184,46 @@ var randNum = function () {
 // Panel toolbox
 
 
-  $(".collapse-link").on("click", function () {
-    var $BOX_PANEL = $(this).closest(".x_panel"),
-      $ICON = $(this).find("i"),
-      $BOX_CONTENT = $BOX_PANEL.find(".x_content");
+$(".collapse-link").on("click", function () {
+  var $BOX_PANEL = $(this).closest(".x_panel"),
+    $ICON = $(this).find("i"),
+    $BOX_CONTENT = $BOX_PANEL.find(".x_content");
 
-    // fix for some div with hardcoded fix class
-    if ($BOX_PANEL.attr("style")) {
-      $BOX_CONTENT.slideToggle(200, function () {
-        $BOX_PANEL.removeAttr("style");
-      });
-    } else {
-      $BOX_CONTENT.slideToggle(200);
-      $BOX_PANEL.css("height", "auto");
-    }
+  // fix for some div with hardcoded fix class
+  if ($BOX_PANEL.attr("style")) {
+    $BOX_CONTENT.slideToggle(200, function () {
+      $BOX_PANEL.removeAttr("style");
+    });
+  } else {
+    $BOX_CONTENT.slideToggle(200);
+    $BOX_PANEL.css("height", "auto");
+  }
 
-    $ICON.toggleClass("fa-chevron-up fa-chevron-down");
-  });
-  $(".collapse-link-hilih").on("click", function () {
-    var $BOX_PANEL = $(this).closest(".x_panel_hilih"),
-      $ICON = $(this).find("i"),
-      $BOX_CONTENT = $BOX_PANEL.find(".x_content");
+  $ICON.toggleClass("fa-chevron-up fa-chevron-down");
+});
+$(".collapse-link-hilih").on("click", function () {
+  var $BOX_PANEL = $(this).closest(".x_panel_hilih"),
+    $ICON = $(this).find("i"),
+    $BOX_CONTENT = $BOX_PANEL.find(".x_content");
 
-    // fix for some div with hardcoded fix class
-    if ($BOX_PANEL.attr("style")) {
-      $BOX_CONTENT.slideToggle(200, function () {
-        $BOX_PANEL.removeAttr("style");
-      });
-    } else {
-      $BOX_CONTENT.slideToggle(200);
-      $BOX_PANEL.css("height", "auto");
-    }
+  // fix for some div with hardcoded fix class
+  if ($BOX_PANEL.attr("style")) {
+    $BOX_CONTENT.slideToggle(200, function () {
+      $BOX_PANEL.removeAttr("style");
+    });
+  } else {
+    $BOX_CONTENT.slideToggle(200);
+    $BOX_PANEL.css("height", "auto");
+  }
 
-    $ICON.toggleClass("fa-chevron-up fa-chevron-down");
-  });
+  $ICON.toggleClass("fa-chevron-up fa-chevron-down");
+});
 
-  $(".close-link").click(function () {
-    var $BOX_PANEL = $(this).closest(".x_panel");
+$(".close-link").click(function () {
+  var $BOX_PANEL = $(this).closest(".x_panel");
 
-    $BOX_PANEL.remove();
-  });
+  $BOX_PANEL.remove();
+});
 
 // /Panel toolbox
 
@@ -354,8 +354,8 @@ $.fn.popover.Constructor.prototype.leave = function (obj) {
     obj instanceof this.constructor
       ? obj
       : $(obj.currentTarget)
-          [this.type](this.getDelegateOptions())
-          .data("bs." + this.type);
+      [this.type](this.getDelegateOptions())
+        .data("bs." + this.type);
   var container, timeout;
 
   originalLeave.call(this, obj);
@@ -723,8 +723,8 @@ function init_skycons() {
   console.log("init_skycons");
 
   var icons = new Skycons({
-      color: "#73879C",
-    }),
+    color: "#73879C",
+  }),
     list = [
       "clear-day",
       "clear-night",
@@ -739,7 +739,7 @@ function init_skycons() {
     ],
     i;
 
-  for (i = list.length; i--; ) icons.set(list[i], list[i]);
+  for (i = list.length; i--;) icons.set(list[i], list[i]);
 
   icons.play();
 }
@@ -1318,7 +1318,7 @@ function init_parsley() {
 
   try {
     hljs.initHighlightingOnLoad();
-  } catch (err) {}
+  } catch (err) { }
 }
 
 /* INPUTS */
@@ -1342,7 +1342,7 @@ function init_TagsInput() {
       width: "auto",
     });
 
-    
+
   }
 }
 
@@ -1376,33 +1376,33 @@ function init_wysiwyg() {
 
   function init_ToolbarBootstrapBindings() {
     var fonts = [
-        "Serif",
-        "Sans",
-        "Arial",
-        "Arial Black",
-        "Courier",
-        "Courier New",
-        "Comic Sans MS",
-        "Helvetica",
-        "Impact",
-        "Lucida Grande",
-        "Lucida Sans",
-        "Tahoma",
-        "Times",
-        "Times New Roman",
-        "Verdana",
-      ],
+      "Serif",
+      "Sans",
+      "Arial",
+      "Arial Black",
+      "Courier",
+      "Courier New",
+      "Comic Sans MS",
+      "Helvetica",
+      "Impact",
+      "Lucida Grande",
+      "Lucida Sans",
+      "Tahoma",
+      "Times",
+      "Times New Roman",
+      "Verdana",
+    ],
       fontTarget = $("[title=Font]").siblings(".dropdown-menu");
     $.each(fonts, function (idx, fontName) {
       fontTarget.append(
         $(
           '<li><a data-edit="fontName ' +
-            fontName +
-            '" style="font-family:\'' +
-            fontName +
-            "'\">" +
-            fontName +
-            "</a></li>"
+          fontName +
+          '" style="font-family:\'' +
+          fontName +
+          "'\">" +
+          fontName +
+          "</a></li>"
         )
       );
     });
@@ -1472,9 +1472,9 @@ function init_wysiwyg() {
     }
     $(
       '<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-        "<strong>File upload error</strong> " +
-        msg +
-        " </div>"
+      "<strong>File upload error</strong> " +
+      msg +
+      " </div>"
     ).prependTo("#alerts");
   }
 
@@ -1753,8 +1753,8 @@ function init_knob() {
       console.log("cancel : ", this);
     },
     /*format : function (value) {
-		 return value + '%';
-		 },*/
+     return value + '%';
+     },*/
     draw: function () {
       // "tron" case
       if (this.$.data("skin") == "tron") {
@@ -2033,8 +2033,8 @@ function init_daterangepicker() {
 
   $("#reportrange span").html(
     moment().subtract(29, "days").format("MMMM D, YYYY") +
-      " - " +
-      moment().format("MMMM D, YYYY")
+    " - " +
+    moment().format("MMMM D, YYYY")
   );
   $("#reportrange").daterangepicker(optionSet1, cb);
   $("#reportrange").on("show.daterangepicker", function () {
@@ -2046,9 +2046,9 @@ function init_daterangepicker() {
   $("#reportrange").on("apply.daterangepicker", function (ev, picker) {
     console.log(
       "apply event fired, start/end dates are " +
-        picker.startDate.format("MMMM D, YYYY") +
-        " to " +
-        picker.endDate.format("MMMM D, YYYY")
+      picker.startDate.format("MMMM D, YYYY") +
+      " to " +
+      picker.endDate.format("MMMM D, YYYY")
     );
   });
   $("#reportrange").on("cancel.daterangepicker", function (ev, picker) {
@@ -2135,8 +2135,8 @@ function init_daterangepicker_right() {
 
   $("#reportrange_right span").html(
     moment().subtract(29, "days").format("MMMM D, YYYY") +
-      " - " +
-      moment().format("MMMM D, YYYY")
+    " - " +
+    moment().format("MMMM D, YYYY")
   );
 
   $("#reportrange_right").daterangepicker(optionSet1, cb);
@@ -2150,9 +2150,9 @@ function init_daterangepicker_right() {
   $("#reportrange_right").on("apply.daterangepicker", function (ev, picker) {
     console.log(
       "apply event fired, start/end dates are " +
-        picker.startDate.format("MMMM D, YYYY") +
-        " to " +
-        picker.endDate.format("MMMM D, YYYY")
+      picker.startDate.format("MMMM D, YYYY") +
+      " to " +
+      picker.endDate.format("MMMM D, YYYY")
     );
   });
   $("#reportrange_right").on("cancel.daterangepicker", function (ev, picker) {
@@ -2311,13 +2311,13 @@ function init_PNotify() {
   if (!sessionStorage.getItem("notifAwal")) {
     "undefined" != typeof PNotify &&
       (console.log("init_PNotify"),
-      new PNotify({
-        title: "Pungut Suara",
-        type: "info",
-        text: "Selamat Datang di Pungut Suara, anda bisa membuat pemilihan dan memanajemenkan secara online",
-        addclass: "dark",
-        styling: "bootstrap3",
-      }));
+        new PNotify({
+          title: "Pungut Suara",
+          type: "info",
+          text: "Selamat Datang di Pungut Suara, anda bisa membuat pemilihan dan memanajemenkan secara online",
+          addclass: "dark",
+          styling: "bootstrap3",
+        }));
     sessionStorage.setItem("notifAwal", true);
   }
 }
@@ -2351,12 +2351,12 @@ function init_CustomNotification() {
     } else {
       $("#custom_notifications ul.notifications").append(
         "<li><a id='ntlink" +
-          cnt +
-          "' class='alert-" +
-          options.type +
-          "' href='#ntf" +
-          cnt +
-          "'><i class='fa fa-bell animated shake'></i></a></li>"
+        cnt +
+        "' class='alert-" +
+        options.type +
+        "' href='#ntf" +
+        cnt +
+        "'><i class='fa fa-bell animated shake'></i></a></li>"
       );
       $("#custom_notifications #notif-group").append(message);
       cnt++;
@@ -2431,8 +2431,8 @@ function init_EasyPieChart() {
       obj instanceof this.constructor
         ? obj
         : $(obj.currentTarget)
-            [this.type](this.getDelegateOptions())
-            .data("bs." + this.type);
+        [this.type](this.getDelegateOptions())
+          .data("bs." + this.type);
     var container, timeout;
 
     originalLeave.call(this, obj);
@@ -3055,16 +3055,45 @@ function init_DataTables() {
 
   var handleDataTableButtons = function () {
     if ($("#datatable-buttons").length) {
+      let columns;
+      function getPromise() {
+        var deferred = $.Deferred();
+        var dataUrl = document.location.origin+'/dashboard/pemilih/slugnya';
+        $.getJSON(dataUrl, function(jsondata) {
+          setTimeout(function() {
+            deferred.resolve(jsondata);
+          }, 0);
+        }).fail(function( jqxhr, textStatus, error ) {
+          // ********* FAILED
+          var err = textStatus + ", " + error;
+          console.log( "Request Failed: " + err );
+        });
+        return deferred.promise();
+      }
+      // Get the columns
+      getPromise().done(function(jsondata) {
+        columns = jsondata.columns;
+        console.log("INI KOLOM COY",columns);
+      });
+
+      console.log("INI KOLOM COY",columns);
       $("#datatable-buttons").DataTable({
-        data:dataJson,
-        columns: columnData,
+        "processing": true,
+        // "serverSide": true,
+        ajax: {
+          url: '/dashboard/pemilih/slugnya',
+          dataSrc: 'data',
+          // data:dataJson,
+          // columns: columnData,
+        },
+        columns: columns,
         dom: "Blfrtip",
         buttons: [
           {
             extend: 'pdfHtml5',
             download: 'open',
             className: "btn-sm"
-        },
+          },
           {
             extend: "copy",
             className: "btn-sm",

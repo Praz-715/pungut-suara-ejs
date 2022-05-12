@@ -26,7 +26,9 @@ const waktuPelaksanaan = new mongoose.Schema({
 });
 
 const pemilih = new mongoose.Schema({
-    data: mongoose.Schema.Types.Mixed
+    identitas:{type:[mongoose.Schema.Types.Mixed], required:false} ,
+    memilih:{type:[mongoose.Schema.Types.Mixed], required:false} ,
+    key: { type: String, unique: true, required: false }
 })
 
 const pemiluSchema = new mongoose.Schema({
@@ -62,7 +64,7 @@ const pemiluSchema = new mongoose.Schema({
 
     calonDipilih: [calonDipilih],
     fieldPemilih: [fieldPemilih],
-    pemilih: [mongoose.Schema.Types.Mixed]
+    pemilih: [pemilih]
 })
 
 const PemiluModel = mongoose.model("pemilu", pemiluSchema)
