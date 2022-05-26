@@ -3053,72 +3053,156 @@ function init_DataTables() {
   }
   console.log("init_DataTables");
 
-  var handleDataTableButtons = function () {
-    if ($("#datatable-buttons").length) {
-      let columns;
-      function getPromise() {
-        var deferred = $.Deferred();
-        var dataUrl = document.location.origin+'/dashboard/pemilih/slugnya';
-        $.getJSON(dataUrl, function(jsondata) {
-          setTimeout(function() {
-            deferred.resolve(jsondata);
-          }, 0);
-        }).fail(function( jqxhr, textStatus, error ) {
-          // ********* FAILED
-          var err = textStatus + ", " + error;
-          console.log( "Request Failed: " + err );
-        });
-        return deferred.promise();
-      }
-      // Get the columns
-      getPromise().done(function(jsondata) {
-        columns = jsondata.columns;
-        console.log("INI KOLOM COY",columns);
-      });
+  // var handleDataTableButtons = function () {
+  //   if ($("#datatable-buttons").length) {
+  //     function getPromise() {
+  //       var deferred = $.Deferred();
+  //       var dataUrl = document.location.origin + '/dashboard/pemilih/slugnya';
+  //       $.getJSON(dataUrl, function (jsondata) {
+  //         setTimeout(function () {
+  //           deferred.resolve(jsondata);
+  //         }, 0);
+  //       }).fail(function (jqxhr, textStatus, error) {
+  //         // ********* FAILED
+  //         var err = textStatus + ", " + error;
+  //         console.log("Request Failed: " + err);
+  //       });
+  //       return deferred.promise();
+  //     }
+  //     // Get the columns
+  //     let columns = getPromise().done(function (jsondata) {
+  //       return jsondata.columns;
+  //       // console.log("INI KOLOM COY",columns);
+  //     });
 
-      console.log("INI KOLOM COY",columns);
-      $("#datatable-buttons").DataTable({
-        "processing": true,
-        // "serverSide": true,
-        ajax: {
-          url: '/dashboard/pemilih/slugnya',
-          dataSrc: 'data',
-          // data:dataJson,
-          // columns: columnData,
-        },
-        columns: columns,
-        dom: "Blfrtip",
-        buttons: [
-          {
-            extend: 'pdfHtml5',
-            download: 'open',
-            className: "btn-sm"
-          },
-          {
-            extend: "copy",
-            className: "btn-sm",
-          },
-          {
-            extend: "csv",
-            className: "btn-sm",
-          },
-          {
-            extend: "excel",
-            className: "btn-sm",
-            filename: "Pemilih"
-          },
-          // {
-          //   extend: "pdfHtml5",
-          //   className: "btn-sm",
-          // },
-          {
-            extend: "print",
-            className: "btn-sm",
-          },
-        ],
-        responsive: true,
-        keys: true,
-      });
+  //     console.log("INI KOLOM COY", columns);
+  //     $("#datatable-buttons").DataTable({
+  //       "processing": true,
+  //       // "serverSide": true,
+  //       ajax: {
+  //         url: '/dashboard/pemilih/slugnya',
+  //         dataSrc: 'data',
+  //         // data:dataJson,
+  //         // columns: columnData,
+  //       },
+  //       columns: columns,
+  //       dom: "Blfrtip",
+  //       buttons: [
+  //         {
+  //           extend: 'pdfHtml5',
+  //           download: 'open',
+  //           className: "btn-sm"
+  //         },
+  //         {
+  //           extend: "copy",
+  //           className: "btn-sm",
+  //         },
+  //         {
+  //           extend: "csv",
+  //           className: "btn-sm",
+  //         },
+  //         {
+  //           extend: "excel",
+  //           className: "btn-sm",
+  //           filename: "Pemilih"
+  //         },
+  //         // {
+  //         //   extend: "pdfHtml5",
+  //         //   className: "btn-sm",
+  //         // },
+  //         {
+  //           extend: "print",
+  //           className: "btn-sm",
+  //         },
+  //       ],
+  //       responsive: true,
+  //       keys: true,
+  //     });
+  //   }
+  // };
+
+  var handleDataTableButtons = function () {
+    if ($("#pemilih-table").length) {
+      var data,
+        tableName = '#pemilih-table',
+        slug = window.location.href.split('/pemilihan/')[1].split('/')[0],
+        columns,
+        str,
+        jqxhr = $.ajax(`/dashboard/pemilih/${slug}`)
+          .done(function () {
+            data = JSON.parse(jqxhr.responseText);
+
+            // Iterate each column and print table headers for Datatables
+            $.each(data.columns, function (k, colObj) {
+              str = '<th>' + colObj.name + '</th>';
+              $(str).appendTo(tableName + '>thead>tr');
+            });
+
+            // Add some Render transformations to Columns
+            // Not a good practice to add any of this in API/ Json side
+            data.columns[0].render = function (data, type, row) {
+              return '<h4>' + data + '</h4>';
+            }
+            // Debug? console.log(data.columns[0]);
+
+            $(tableName).dataTable({
+              "data": data.data,
+              "columns": data.columns,
+              "dom": "Blfrtip",
+              "buttons": [
+                {
+                  extend: 'pdfHtml5',
+                  download: 'open',
+                  className: "btn-sm"
+                },
+                {
+                  extend: "copy",
+                  className: "btn-sm",
+                },
+                {
+                  extend: "csv",
+                  className: "btn-sm",
+                },
+                {
+                  extend: "excel",
+                  className: "btn-sm",
+                  filename: "Pemilih"
+                },
+                // {
+                //   extend: "pdfHtml5",
+                //   className: "btn-sm",
+                // },
+                {
+                  extend: "print",
+                  className: "btn-sm",
+                },
+              ],
+              // responsive: true,
+              "fnInitComplete": function () {
+                // Event handler to be fired when rendering is complete (Turn off Loading gif for example)
+                console.log('Datatable rendering complete');
+              }
+            });
+          })
+          .fail(function (jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+              msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+              msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+              msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+              msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+              msg = 'Time out error.';
+            } else if (exception === 'abort') {
+              msg = 'Ajax request aborted.';
+            } else {
+              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            console.log(msg);
+          });
     }
   };
 
