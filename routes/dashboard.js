@@ -541,28 +541,84 @@ router.delete('/delete-image', async (req, res) => {
 
 router.get('/pemilih/:slug', async (req, res) => {
   const { slug } = req.params
-  const pemilih = await PemiluModel.findOne({ slug }, "pemilih")
+  const pemilihan = await PemiluModel.findOne({ slug })
+  let columns = [];
+  let datapemilih = [];
 
-  
-  console.log("INI SLUG NYA COY", pemilih)
+  // cek apakah field pemilih ada isinya atau ga
+  if (pemilihan.fieldPemilih.length > 0) {
+    // looping field pemilih nya
+    for (let i = 0; i < pemilihan.fieldPemilih.length; i++) {
+      // jika pemilihan terbuka key tidak akan ditampilkan
+      if (pemilihan.pemilihanTerbuka && pemilihan.fieldPemilih[i].key) continue;
+      columns.push(pemilihan.fieldPemilih[i].namaField)
+    }
+  }
+  if (pemilihan.modeGroup) {
+    pemilihan.fieldGroup.forEach((grup) => {
+      columns.push(grup)
+    })
+  } else {
+    columns.push("memilih")
+  }
+  columns.push("waktu")
+
+  // looping data pemilihnya
+  if (pemilihan.pemilih.length > 0) {
+
+    if (!pemilihan.pemilihanTerbuka) {
+      for (let i = 0; i < pemilihan.pemilih.length; i++) {
+        let hmmmmm = {}
+        // jika pemilihan terturup
+        columns.forEach((col, index)=>{
+          (index === 0) ? hmmmmm[col] = pemilihan.pemilih[i].key : null
+
+          if(pemilihan.pemilih[i].identitas.length == 0)
+          pemilihan.pemilih[i].identitas.forEach((iden)=>{
+            (col in iden) ? hmmmmm[col] = iden[col] : null
+          })
+        })
+        datapemilih.push(hmmmmm)
+      }
+    }
+  }
+
+
+  // console.log("Apakah hasilnya",'Nama Lengkap' in {'Nama Lengkap' : "hahahahaha", 'NIK': 21038492802})
+
+
+  columns = columns.map((col) => { return { "data": col, "name": col } })
+  console.log("DATA Pemilih", datapemilih)
+  // if (pemilihan.pemilihanTerbuka && pemilihan.modeGroup) {
+  //   pemilihan.fieldPemilih.map((fieldnya) => {
+  //     console.log("field pemilihnya , ", fieldnya)
+  //   })
+  // }
+
+
+  // console.log("INI SLUG NYA COY", pemilihan)
 
   const data = {
     "data": [{
       "work": "Symfony No. 3 in D minor",
       "id": "1",
-      "composer": "Anton Bruckner"
+      "composer": ""
+      // "composer": "Anton Bruckner"
     }, {
       "work": "Violin Concerto in E minor",
       "id": "2",
-      "composer": "Mendelssohn Felix"
+      "composer": ""
+      // "composer": "Mendelssohn Felix"
     }, {
       "work": "Symfony No.1 in C major",
       "id": "3",
-      "composer": "Beethoven, Ludwig van"
+      "composer": ""
+      // "composer": "Beethoven, Ludwig van"
     }, {
       "work": "Solution for dynamic headers in datatables",
       "id": "4",
-      "composer": "Fasani, Guza"
+      "composer": ""
+      // "composer": "Fasani, Guza"
     }],
     "columns": [
       {
@@ -580,7 +636,7 @@ router.get('/pemilih/:slug', async (req, res) => {
       }
     ]
   }
-  console.log(req.query)
+  // console.log(req.query)
   res.json(data)
 })
 
