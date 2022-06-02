@@ -565,22 +565,28 @@ router.get('/pemilih/:slug', async (req, res) => {
 
   // looping data pemilihnya
   if (pemilihan.pemilih.length > 0) {
+    pemilihan.pemilih.forEach((pem, index) => {
+      if (index == 0) console.log("PEMILIH 0", pem.identitas)
+      let bulala = {}
+      if (pemilihan.fieldPemilih.length > 0) {
+        for (let i = 0; i < pemilihan.fieldPemilih.length; i++) {
+          let a = pemilihan.fieldPemilih[i].namaField
+          if (!pemilihan.pemilihanTerbuka) {
+            bulala[pemilihan.fieldPemilih[0].namaField] = pem.key
+          } else if (pemilihan.pemilihanTerbuka && i == 0) continue;
+          // bulala[a] = (pemilihan.fieldPemilih[i].namaField in pem.identitas) ? pem.identitas[pemilihan.fieldPemilih[i].namaField] : ""
+          bulala[a] = (pem.identitas.findIndex((o) =>  a in o ) >= 0) ? pem.identitas[pem.identitas.findIndex((o) =>  a in o )][a] : ""
+          // console.log("apakah true - ",a)
 
-    if (!pemilihan.pemilihanTerbuka) {
-      for (let i = 0; i < pemilihan.pemilih.length; i++) {
-        let hmmmmm = {}
-        // jika pemilihan terturup
-        columns.forEach((col, index)=>{
-          (index === 0) ? hmmmmm[col] = pemilihan.pemilih[i].key : null
+        }
 
-          if(pemilihan.pemilih[i].identitas.length == 0)
-          pemilihan.pemilih[i].identitas.forEach((iden)=>{
-            (col in iden) ? hmmmmm[col] = iden[col] : null
-          })
-        })
-        datapemilih.push(hmmmmm)
+
       }
-    }
+      // console.log(bulala)
+      datapemilih.push(bulala)
+
+    })
+
   }
 
 

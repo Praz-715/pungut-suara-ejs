@@ -28,7 +28,8 @@ const waktuPelaksanaan = new mongoose.Schema({
 const pemilih = new mongoose.Schema({
     identitas:{type:[mongoose.Schema.Types.Mixed], required:false} ,
     memilih:{type:[mongoose.Schema.Types.Mixed], required:false} ,
-    key: { type: String, unique: true, required: false }
+    key: { type: String, unique: true, required: false },
+    waktu: {type: Date, required: false}
 })
 
 const pemiluSchema = new mongoose.Schema({
