@@ -545,6 +545,7 @@ router.get('/pemilih/:slug', async (req, res) => {
   let columns = [];
   let datapemilih = [];
 
+  
   // cek apakah field pemilih ada isinya atau ga
   if (pemilihan.fieldPemilih.length > 0) {
     // looping field pemilih nya
@@ -562,88 +563,106 @@ router.get('/pemilih/:slug', async (req, res) => {
     columns.push("memilih")
   }
   columns.push("waktu")
+  columns.push("edit")
+  
 
   // looping data pemilihnya
   if (pemilihan.pemilih.length > 0) {
     pemilihan.pemilih.forEach((pem, index) => {
-      if (index == 0) console.log("PEMILIH 0", pem.identitas)
-      let bulala = {}
+      // tampung data satuan dalam object
+      let dataPemilihSatuan = {}
+      
+      // cek field pemilih
       if (pemilihan.fieldPemilih.length > 0) {
+        // looping field pemilih agar sama dengan column
         for (let i = 0; i < pemilihan.fieldPemilih.length; i++) {
-          let a = pemilihan.fieldPemilih[i].namaField
-          if (!pemilihan.pemilihanTerbuka) {
-            bulala[pemilihan.fieldPemilih[0].namaField] = pem.key
-          } else if (pemilihan.pemilihanTerbuka && i == 0) continue;
-          // bulala[a] = (pemilihan.fieldPemilih[i].namaField in pem.identitas) ? pem.identitas[pemilihan.fieldPemilih[i].namaField] : ""
-          bulala[a] = (pem.identitas.findIndex((o) =>  a in o ) >= 0) ? pem.identitas[pem.identitas.findIndex((o) =>  a in o )][a] : ""
-          // console.log("apakah true - ",a)
+          // tampung nama field tiap looping pada variabel
+          let namaFieldLooping = pemilihan.fieldPemilih[i].namaField
+          // jika pemilihan bersifat tertutup
+          if (!pemilihan.pemilihanTerbuka && i == 0) {
+            // data[key] = pem key
+            dataPemilihSatuan[pemilihan.fieldPemilih[0].namaField] = pem.key
+            console.log("masuk sini ga yaaa")
+            continue
+          } else if (pemilihan.pemilihanTerbuka && i == 0) continue // jika pemilihan tebuka key tidak dibutuhkan;
+
+          // data[namaField] = find index from array dan masukan
+          dataPemilihSatuan[namaFieldLooping] = (pem.identitas.findIndex((o) =>  namaFieldLooping in o ) >= 0) ? pem.identitas[pem.identitas.findIndex((o) =>  namaFieldLooping in o )][namaFieldLooping] : ""
 
         }
-
-
       }
-      // console.log(bulala)
-      datapemilih.push(bulala)
 
+      // cek mode grup
+      if(pemilihan.modeGroup){
+        // looping field group agar sama dengan column
+        pemilihan.fieldGroup.forEach((grup)=>{
+          // data[namaField] = find index from array dan masukan
+          dataPemilihSatuan[grup] = (pem.memilih.grup.findIndex((o) =>  grup in o ) >= 0) ? pem.memilih.grup[pem.memilih.grup.findIndex((o) =>  grup in o )][grup] : ""
+        })
+      }else{ 
+        // jika bukan mode grup
+        dataPemilihSatuan['memilih'] = (pem.memilih.satu.length > 0) ? pem.memilih.satu : ""
+      }
+
+      // tambahkan waktu
+      dataPemilihSatuan['waktu'] = (pem.waktu != null) ? pem.waktu : ""
+      
+
+      // push satuan data
+      datapemilih.push(dataPemilihSatuan)
+      dataPemilihSatuan['edit'] =  pem._id
     })
 
   }
 
 
-  // console.log("Apakah hasilnya",'Nama Lengkap' in {'Nama Lengkap' : "hahahahaha", 'NIK': 21038492802})
-
 
   columns = columns.map((col) => { return { "data": col, "name": col } })
-  console.log("DATA Pemilih", datapemilih)
-  // if (pemilihan.pemilihanTerbuka && pemilihan.modeGroup) {
-  //   pemilihan.fieldPemilih.map((fieldnya) => {
-  //     console.log("field pemilihnya , ", fieldnya)
-  //   })
+  console.log("DATA Pemilih", columns)
+
+
+
+
+  // const data = {
+  //   "data": [{
+  //     "work": "Symfony No. 3 in D minor",
+  //     "id": "1",
+  //     "composer": ""
+  //     // "composer": "Anton Bruckner"
+  //   }, {
+  //     "work": "Violin Concerto in E minor",
+  //     "id": "2",
+  //     "composer": ""
+  //     // "composer": "Mendelssohn Felix"
+  //   }, {
+  //     "work": "Symfony No.1 in C major",
+  //     "id": "3",
+  //     "composer": ""
+  //     // "composer": "Beethoven, Ludwig van"
+  //   }, {
+  //     "work": "Solution for dynamic headers in datatables",
+  //     "id": "4",
+  //     "composer": ""
+  //     // "composer": "Fasani, Guza"
+  //   }],
+  //   "columns": [
+  //     {
+  //       "data": "work",
+  //       "name": "Work"
+  //     },
+  //     {
+  //       "data": "id",
+  //       "name": "Product ID"
+
+  //     },
+  //     {
+  //       "data": "composer",
+  //       "name": "Composer"
+  //     }
+  //   ]
   // }
-
-
-  // console.log("INI SLUG NYA COY", pemilihan)
-
-  const data = {
-    "data": [{
-      "work": "Symfony No. 3 in D minor",
-      "id": "1",
-      "composer": ""
-      // "composer": "Anton Bruckner"
-    }, {
-      "work": "Violin Concerto in E minor",
-      "id": "2",
-      "composer": ""
-      // "composer": "Mendelssohn Felix"
-    }, {
-      "work": "Symfony No.1 in C major",
-      "id": "3",
-      "composer": ""
-      // "composer": "Beethoven, Ludwig van"
-    }, {
-      "work": "Solution for dynamic headers in datatables",
-      "id": "4",
-      "composer": ""
-      // "composer": "Fasani, Guza"
-    }],
-    "columns": [
-      {
-        "data": "work",
-        "name": "Work"
-      },
-      {
-        "data": "id",
-        "name": "Product ID"
-
-      },
-      {
-        "data": "composer",
-        "name": "Composer"
-      }
-    ]
-  }
   // console.log(req.query)
-  res.json(data)
+  res.json({data: datapemilih, columns})
 })
 
 router.get('/detail-calon/:slug/:idCalon', async (req, res) => {

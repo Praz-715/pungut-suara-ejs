@@ -3148,6 +3148,15 @@ function init_DataTables() {
             $(tableName).dataTable({
               "data": data.data,
               "columns": data.columns,
+              columnDefs: [
+                {
+                  targets: [-1],
+                  render: function (data, type, row, meta) {
+                    return '<button class="btn btn-danger btn-remove" id=n-"' + meta.row + '">' + "<i class='fa fa-remove'></i>" + "</button>";
+                  }
+
+                }
+              ],
               "dom": "Blfrtip",
               "buttons": [
                 {
@@ -3182,6 +3191,12 @@ function init_DataTables() {
                 // Event handler to be fired when rendering is complete (Turn off Loading gif for example)
                 console.log('Datatable rendering complete');
               }
+            });
+            $(tableName +' tbody').on('click', '.btn-remove', function () {
+              let id = $(this).attr("id").match(/\d+/)[0];
+              let inidata = $(tableName).DataTable().row( id ).data();
+
+              console.log(inidata.edit);
             });
           })
           .fail(function (jqXHR, exception) {
