@@ -825,9 +825,10 @@ a:focus {
     margin-bottom: 0
 }
 
-.navbar-header {
+
+/* .navbar-header {
     background: #34495E
-}
+} */
 
 .navbar-right {
     margin-right: 0
@@ -835,7 +836,7 @@ a:focus {
 
 .top_nav .navbar-right {
     margin: 0;
-    width: 70%;
+    /* width: 50%; */
     float: right
 }
 
@@ -985,7 +986,7 @@ a:focus {
     font-weight: 500;
     color: #ECF0F1 !important;
     margin-left: 0 !important;
-    line-height: 32px
+    line-height: 32px;
 }
 
 .site_title {
@@ -1010,6 +1011,20 @@ a:focus {
 
 .nav.navbar-nav>li>a {
     color: #515356 !important
+}
+
+.nav.navbar-nav>li>.buat-akun {
+    color: #fff !important;
+    border: 2px solid #0d65e8;
+    border-radius: 10px;
+    padding: 7px 11px;
+    margin: 3px;
+    background-color: #0d65e8;
+}
+
+.nav.navbar-nav>li>.buat-akun:focus,
+.nav.navbar-nav>li>.buat-akun:hover {
+    background-color: #084196;
 }
 
 .nav.top_menu>li>a {
@@ -1064,6 +1079,24 @@ a:focus {
 }
 
 .toggle a i {
+    font-size: 26px
+}
+
+.toggle-brand {
+    float: left;
+    margin: 0;
+    padding-top: 16px;
+    width: 200px
+}
+
+.toggle-brand a {
+    padding: 15px 15px 0;
+    margin: 0;
+    cursor: pointer;
+    font-size: 20px
+}
+
+.toggle-brand a i {
     font-size: 26px
 }
 

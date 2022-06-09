@@ -53,8 +53,11 @@ router.get('/:slug', async (req, res, next) => {
 })
 
 
+router.get('/haha', (req, res) => {
+  res.render('landing-page/index', { layout: 'layouts/landing-layout',user: req.session.user })
+})
 router.get('/', (req, res) => {
-  res.render('landing-page/index', { layout: 'layouts/landing-layout' })
+  res.render('landing-page/index2', { layout: 'layouts/landing-layout2',user: req.session.user })
 })
 
 export default router
