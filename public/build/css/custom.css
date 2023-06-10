@@ -634,7 +634,7 @@ body {
 }
 
 .page-title .title_left {
-    width: 45%;
+    width: 80%;
     float: left;
     display: block
 }
@@ -644,7 +644,7 @@ body {
 }
 
 .page-title .title_right {
-    width: 55%;
+    width: 20%;
     float: left;
     display: block
 }
@@ -823,6 +823,60 @@ a:focus {
 
 .navbar {
     margin-bottom: 0
+}
+
+.position-relative {
+    position: relative !important;
+    display: flex;
+    justify-content: center !important;
+}
+
+.justify-content-center {
+    justify-content: center !important;
+    display: flex;
+}
+
+.justify-content-center-calon {
+    justify-content: center !important;
+    display: flex;
+}
+
+.count2 {
+    width: 100%;
+    margin-left: 1px;
+    border: 1px solid #ddd;
+    border-left: 0;
+    border-right: 0;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .justify-content-center {
+        /* justify-content: center !important;
+        display: inherit; */
+        display: inherit;
+        align-items: center;
+        justify-content: center
+    }
+    .justify-content-center-calon {
+        justify-content: center !important;
+        display: inherit;
+    }
+    .widget {
+        padding-left: 40px;
+        padding-right: 40px;
+        max-width: none;
+    }
+    .navbar-header {
+        width: 100%;
+    }
+    .container-fluid {
+        display: flex;
+    }
+    .selesai {
+        display: none;
+    }
 }
 
 
@@ -1086,7 +1140,7 @@ a:focus {
     float: left;
     margin: 0;
     padding-top: 16px;
-    width: 200px
+    width: 100%
 }
 
 .toggle-brand a {
@@ -3369,7 +3423,7 @@ ul.social li {
 
 .widget {
     min-width: 250px;
-    max-width: 310px
+    /* max-width: 310px */
 }
 
 .widget_tally_box .btn-group button {
@@ -5083,6 +5137,9 @@ ul.notifications {
 }
 
 @media (max-width: 767px) {
+    .p-jumbo {
+        display: none;
+    }
     .dataTables_length {
         float: none;
     }

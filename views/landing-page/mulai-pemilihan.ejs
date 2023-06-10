@@ -1,0 +1,242 @@
+<!-- top navigation -->
+<div class="top_nav" style="margin-left: 0;">
+    <div class="nav_menu">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <div class="nav toggle-brand">
+                        <a href="mulai-pemilihan"><i class="fa fa-paw"></i>
+                            <%= pemilihan.namaPemilihan %>
+                        </a>
+                    </div>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="#" class="user-profile">
+
+                            <span class="selesai">Selesai Memilih</span>
+                            <span class="fa fa-sign-out"></span>
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- /top navigation -->
+<!-- page content -->
+<div class="right_col" role="main" style="margin-left:0;    justify-content: center !important; ">
+    <div class="">
+        <div class="page-title" style="text-align:center;">
+            <div class="title_left" style="color: yellow; background-color:red; width:100%; border-radius:100px; margin-bottom:5px;">
+                <h5>Berakhir dalam <span id="countdown"></span></h5>
+                <!-- <a href="http://" class="btn btn-danger">Button</a> -->
+                <!-- <h3>Widget Designs</h3> -->
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <% if (pemilihan.modeGroup) { %>
+
+
+
+            <% if (Object.keys(queryParams) == 'grup' && pemilihan.fieldGroup.includes(queryParams.grup)) { %>
+                <% const namaGrup=queryParams.grup.replace("'", "" ).replace("'", "" ) %>
+                    <h3>
+                        <a href="mulai-pemilihan" class="fa fa-mail-reply" style="color: green;"></a>
+                        <%= namaGrup, Object.keys(queryParams).length == 0 %>
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="">
+                                <div class="x_content">
+                                    <div class="row justify-content-center-calon">
+                                        <% pemilihan.calonDipilih.filter(o=> o.grup == namaGrup).forEach(element => { %>
+                                            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12 widget widget_tally_box">
+                                                <div class="x_panel fixed_height_390">
+                                                    <div class="x_content gambar">
+                                                        <div class="text-center">
+                                                            <img src="/<%= element.foto %>" alt="<%= element.nama %>" id="fotoCalonNya" class="img-circle calon_img">
+                                                        </div>
+                                                        <h4 class="name">
+                                                            <%= element.nama %>
+                                                        </h4>
+                                                        <div class="flex">
+                                                            <div class="count2">
+                                                                <p>
+                                                                    <%= "sudfhsadfgasdyfla;sudnfoiaysdfalsdfnsdyfn askd fasgd sjdfm".substring(0,10) %>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <!-- <p>Grup ${calon.grup}</p> -->
+                                                            <button type="button" class="btn btn-primary" onclick="showModalCalon('628f75fe7c2c9b61717ab743')">
+                                                                Buat Deskripsi
+                                                            </button>
+                                                            <button type="button" class="btn btn-danger" onclick="voteCalon('628f75fe7c2c9b61717ab743')">
+                                                                Vote
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% } else { %>
+                        <div class="row top_tiles justify-content-center">
+                            <% pemilihan.fieldGroup.forEach(element=> { %>
+                                <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                    <div class="tile-stats">
+                                        <a href="?grup=<%= element %>" class="icon"><i class="fa fa-sign-in"
+                                                style="color: rgb(154, 154, 6);"></i></a href="?">
+                                        <a href="?grup=<%= element %>" class="count">Belum Memilih</a>
+                                        <a href="?grup=<%= element %>">
+                                            <h3>
+                                                grup
+                                                <%= element %>
+                                            </h3>
+                                        </a>
+
+                                        <p>
+                                            <%= pemilihan.calonDipilih.filter(o=> o.grup == element).length %> calon
+                                        </p>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+
+                        <% } %>
+
+
+                            <% } else { %>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="">
+                                            <div class="x_content">
+                                                <div class="row justify-content-center-calon">
+                                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12 widget widget_tally_box">
+                                                        <div class="x_panel fixed_height_390">
+                                                            <div class="x_content gambar">
+
+                                                                <div class="text-center">
+
+                                                                    <img src="/public\production\images\1653569022320-Ade+kk.jpg" alt="AKU" id="fotoCalonNya" class="img-circle calon_img">
+                                                                </div>
+
+
+                                                                <!-- <h4 class="name">No. 1</h4> -->
+                                                                <h4 class="name">
+                                                                    AKU
+                                                                </h4>
+                                                                <div class="flex">
+                                                                    <ul class="list-inline count2">
+                                                                        <li>
+                                                                            <h4>400</h4>
+                                                                            <span>Dilihat</span>
+                                                                        </li>
+                                                                        <li>
+                                                                            <h4>
+                                                                                0
+                                                                            </h4>
+                                                                            <span>Suara</span>
+                                                                        </li>
+                                                                        <li>
+                                                                            <h4>10%</h4>
+                                                                            <span>Persen</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <!-- <p>Grup ${calon.grup}</p> -->
+                                                                    <button type="button" class="btn btn-primary" onclick="showModalCalon('628f75fe7c2c9b61717ab743')">
+                                                                        Buat Deskripsi
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-danger">
+                                                                        Vote
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12 widget widget_tally_box">
+                                                        <div class="x_panel fixed_height_390">
+                                                            <div class="x_content gambar">
+
+                                                                <div class="text-center">
+
+                                                                    <img src="/public\production\images\1653569022320-Ade+kk.jpg" alt="AKU" id="fotoCalonNya" class="img-circle calon_img">
+                                                                </div>
+
+
+                                                                <!-- <h4 class="name">No. 1</h4> -->
+                                                                <h4 class="name">
+                                                                    AKU
+                                                                </h4>
+                                                                <div class="flex">
+                                                                    <ul class="list-inline count2">
+                                                                        <li>
+                                                                            <h4>400</h4>
+                                                                            <span>Dilihat</span>
+                                                                        </li>
+                                                                        <li>
+                                                                            <h4>
+                                                                                0
+                                                                            </h4>
+                                                                            <span>Suara</span>
+                                                                        </li>
+                                                                        <li>
+                                                                            <h4>10%</h4>
+                                                                            <span>Persen</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <!-- <p>Grup ${calon.grup}</p> -->
+                                                                    <button type="button" class="btn btn-primary" onclick="showModalCalon('628f75fe7c2c9b61717ab743')">
+                                                                        Buat Deskripsi
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <% } %>
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+<!-- /page content -->
+
+
+
+
+
+</div>
+<script>
+    const waktuPelaksanaan = JSON.parse('<%- JSON.stringify(pemilihan.waktuPelaksanaan) %>');
+    console.log("INI WAKTU PELAKSANAAN", waktuPelaksanaan)
+</script>

@@ -266,6 +266,7 @@ router.post("/tambah-pemilihan", async (req, res) => {
   }
 
   const response = await PemiluModel(pemilihan).save()
+  console.log(response)
 
   // const response = {slug:'heheh'}
 
@@ -582,12 +583,14 @@ router.get('/pemilih/:slug', async (req, res) => {
           if (!pemilihan.pemilihanTerbuka && i == 0) {
             // data[key] = pem key
             dataPemilihSatuan[pemilihan.fieldPemilih[0].namaField] = pem.key
-            console.log("masuk sini ga yaaa")
+            // console.log("masuk sini ga yaaa")
             continue
-          } else if (pemilihan.pemilihanTerbuka && i == 0) continue // jika pemilihan tebuka key tidak dibutuhkan;
+          } // jika pemilihan tebuka key tidak dibutuhkan;
 
           // data[namaField] = find index from array dan masukan
-          dataPemilihSatuan[namaFieldLooping] = (pem.identitas.findIndex((o) =>  namaFieldLooping in o ) >= 0) ? pem.identitas[pem.identitas.findIndex((o) =>  namaFieldLooping in o )][namaFieldLooping] : ""
+          // dataPemilihSatuan[namaFieldLooping] = (pem.identitas.findIndex((o) =>  namaFieldLooping in o ) >= 0) ? pem.identitas[pem.identitas.findIndex((o) =>  namaFieldLooping in o )][namaFieldLooping] : ""
+          dataPemilihSatuan[namaFieldLooping] = pem.identitas[namaFieldLooping] || ""
+          // console.log('namaFieldLooping', pem.identitas.length)
 
         }
       }
@@ -618,7 +621,8 @@ router.get('/pemilih/:slug', async (req, res) => {
 
 
   columns = columns.map((col) => { return { "data": col, "name": col } })
-  console.log("DATA Pemilih", columns)
+  // console.log("DATA Pemilih", datapemilih)
+  
 
 
 

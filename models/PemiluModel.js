@@ -26,12 +26,12 @@ const waktuPelaksanaan = new mongoose.Schema({
 });
 
 const pemilih = new mongoose.Schema({
-    identitas: { type: [mongoose.Schema.Types.Mixed], required: false },
+    identitas: { type: Object, default: new Object },
     memilih: {
         grup: { type: [mongoose.Schema.Types.Mixed] },
         satu: { type: String, default: "" }
     },
-    key: { type: String, unique: true, required: false },
+    key: { type: String, required: false },
     waktu: { type: Date, default: null }
 })
 
@@ -56,7 +56,7 @@ const pemiluSchema = new mongoose.Schema({
 
 
     // optional
-    deskripsi: { type: String, required: false },
+    deskripsi: { type: String, default: '' },
     fotoKampanye: { type: String, required: false },
     videoKampanye: { type: String, required: false },
 

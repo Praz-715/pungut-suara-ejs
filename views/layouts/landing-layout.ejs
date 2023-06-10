@@ -2,105 +2,170 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>
-        Pungut Suara!
-    </title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Pungut Suara! | </title>
+
+    <!-- Bootstrap -->
+    <link href="/public/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Font Awesome -->
     <link href="/public/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="/public/landing-page/css/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/public/landing-page/css/pungut.css">
+    <!-- NProgress -->
+    <link href="/public/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/public/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- Switchery -->
+    <link href="/public/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="/public/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/public/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="/public/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/vendors/bootstrap-tagsinput-latest/src/bootstrap-tagsinput.css">
+
+    <!-- PNotify -->
+    <link href="/public/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/public/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/public/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="/public/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/public/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/public/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/public/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/public/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Include Editor style. -->
+    <link rel="stylesheet" href="/public/vendors/wysiwyg-editor-node-sdk/froala_editor.pkgd.min.css">
+
+    <!-- <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script> -->
+
+    <!-- Custom Theme Style -->
+    <link href="/public/build/css/custom.css" rel="stylesheet">
 </head>
 
-<body>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-sm navbar-light bg-light static-top">
-        <div class="container-fluid">
-            <a class="navbar-brand site_title" href="#">
-                <i class="fa fa-paw"></i> Pungut Suara!
-                <!-- <img src="/public/production/images/" alt="" width="30" height="24"> -->
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active px-4 border-start" aria-current="page" href="/">Beranda</a>
-                    <a class="nav-link active px-4 border-start border-end" aria-current="page" href="/">Tentang Kami</a>
-                    <a class="nav-link active px-4 border-end" aria-current="page" href="/pemilihan">Pemilihan</a>
-                </div>
-            </div>
-            <div class="d-flex">
-                <a class="btn btn-primary" href="/dashboard">Buat Akun</a>
-            </div>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+
+
+
+
+            <!-- page content -->
+            <%- body %>
+                <!-- /page content -->
+
+                <!-- footer content -->
+                <footer style="margin-left: 0;">
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
         </div>
-    </nav>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/public/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/public/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/public/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/public/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="/public/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/public/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/public/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="/public/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="/public/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/public/vendors/Flot/jquery.flot.js"></script>
+    <script src="/public/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/public/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/public/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/public/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/public/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/public/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/public/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/public/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/public/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/public/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/public/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/public/vendors/moment/min/moment.min.js"></script>
+    <script src="/public/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="/public/vendors/moment/src/countdown.min.js"></script>
+    <script src="/public/vendors/moment/src/moment-countdown.min.js"></script>
+
+    <!-- Switchery -->
+    <script src="/public/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- NProgress -->
+    <script src="/public/vendors/nprogress/nprogress.js"></script>
+
+    <!-- PNotify -->
+    <script src="/public/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="/public/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="/public/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+    <!-- jquery.inputmask -->
+    <script src="/public/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <!-- jQuery Knob -->
+    <script src="/public/vendors/jquery-knob/dist/jquery.knob.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="/public/vendors/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="/public/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/public/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/public/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/public/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/public/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/public/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/public/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/public/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/public/vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+    <script src="/public/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/public/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/public/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/public/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/public/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+
+    <!-- bootstrap-wysiwyg -->
+    <script src="/public/vendors/wysiwyg-editor-node-sdk/froala_editor.pkgd.min.js"></script>
+
+    <!-- jQuery Tags Input -->
+    <script src="/public/vendors/bootstrap-tagsinput-latest/src/bootstrap-tagsinput.js"></script>
 
 
-    <%- body %>
-        <!-- Call to Action-->
-        <section class="call-to-action text-white text-center" id="signup">
-            <div class="container position-relative">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6">
-                        <h2 class="mb-4">Sudah Paham? Mari mulai memilih!</h2>
 
-                        <form class="form-subscribe" id="contactFormFooter" data-sb-form-api-token="API_TOKEN">
-                            <!-- Email address input-->
-                            <div class="row">
-                                <div class="col">
-                                    <input class="form-control form-control-lg" id="cariPemilih" type="text" placeholder="Cari Pemilihan" />
-                                </div>
-                                <div class="col-auto"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button></div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="footer bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                        <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">About</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Contact</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
-                        </ul>
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2021. All Rights Reserved.</p>
-                    </div>
-                    <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-facebook fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-twitter fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#!"><i class="bi-instagram fs-3"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="/public/landing-page/js/bootstrap.bundle.min.js" "></script>
-    </body>
+    <!-- Custom Theme Scripts -->
+    <script src="/public/build/js/pungut.js"></script>
+    <script src="/public/build/js/custom.js"></script>
+
+    <!-- <script>
+        let waktuSekarang = moment().format("MM/DD/YYYY")
+        let waktuBesok = moment().add(1, 'd').format("MM/DD/YYYY")
+    </script> -->
+
+
+
+</body>
+
 </html>

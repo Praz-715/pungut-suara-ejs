@@ -68,6 +68,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.get('/', (req, res) => {
+  if(req.session.auth) res.redirect('/dashboard')
   res.render('auth', { layout: 'layouts/login-regis-loyout', pesan: req.flash('pesan') })
 })
 
